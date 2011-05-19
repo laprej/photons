@@ -62,10 +62,7 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         
         // Take care of some things here...
         Material *m = h.getMaterial();
-        if (m == NULL) {
-            std::cout << "Oh no\n";
-            exit(0);
-        }
+        assert(m != NULL);
         
         // Multiply by material consants
         Vec3f diffuse = m->getDiffuseColor() * energy;
