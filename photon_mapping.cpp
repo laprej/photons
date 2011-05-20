@@ -34,7 +34,7 @@ PhotonMapping::~PhotonMapping() {
 
 void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction, 
                                 const Vec3f &energy, int iter) {
-    if (iter > 2) {
+    if (iter > 5) {
         return;
     }
     // ==============================================
@@ -65,25 +65,61 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         assert(m != NULL);
         
         // Multiply by material consants
-        Vec3f diffuse = m->getDiffuseColor() * energy;
+        Vec3f diffuse = m->getDiffuseColor();
         std::cout << "Diffuse: " << diffuse << "\n";
-        Vec3f reflective = m->getReflectiveColor() * energy;
+        diffuse = diffuse * energy;
+        Vec3f reflective = m->getReflectiveColor();
         std::cout << "Reflective: " << reflective << "\n";
+        reflective = reflective * energy;
+        
+        if (reflective == Vec3f(0,0,0)) {
+            std::cout << "This material is not reflective\n";
+            // Diffuse
+            Vec3f normal = h.getNormal();
+            Vec3f V = r.getDirection();
+            //Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
+            //Vec3f R_dir = MirrorDirection(normal, V);
+            Vec3f R_dir = RandomDiffuseDirection(normal);
+            R_dir.Normalize();
+            //R_dir *= -1.0;
+            Ray R(pos, R_dir);
+            TracePhoton(pos, R_dir, diffuse, iter+1);
+            if (iter != 0) {
+                Photon p(pos, direction, diffuse, iter);
+                kdtree->AddPhoton(p);
+            }
+        }
+        else {
+            std::cout << "This material is reflective\n";
+            // Reflection
+            Vec3f normal = h.getNormal();
+            Vec3f V = r.getDirection();
+            //Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
+            Vec3f R_dir = MirrorDirection(normal, V);
+            R_dir.Normalize();
+            //R_dir *= -1.0;
+            Ray R(pos, R_dir);
+            TracePhoton(pos, R_dir, reflective, iter+1);
+            if (iter != 0) {
+                Photon p(pos, direction, reflective, iter);
+                kdtree->AddPhoton(p);
+            }
+        }
         
         // And handle those differently
         
-        // Reflection
-        Vec3f normal = h.getNormal();
-        Vec3f V = r.getDirection();
-        Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
-        R_dir.Normalize();
-        //R_dir *= -1.0;
-        Ray R(pos, R_dir);
-        Hit nHit;
-        TracePhoton(pos, R_dir, reflective, iter+1);
+//        // Reflection
+//        Vec3f normal = h.getNormal();
+//        Vec3f V = r.getDirection();
+//        Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
+//        R_dir.Normalize();
+//        //R_dir *= -1.0;
+//        Ray R(pos, R_dir);
+//        Hit nHit;
+//        TracePhoton(pos, R_dir, reflective, iter+1);
         
-        Photon p(pos, direction, reflective, iter);
-        kdtree->AddPhoton(p);
+//        Photon p(pos, direction, energy, iter);
+//        kdtree->AddPhoton(p);
     }
     
     
