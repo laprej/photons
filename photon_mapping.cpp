@@ -55,9 +55,7 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
     if (raytracer->CastRay(r, h, 0)) {
         // If we hit something...
         Vec3f v = raytracer->TraceRay(r, h, 0);
-        
-        //std::cout << h << "\n";
-        
+                
         Vec3f pos = r.pointAtParameter(h.getT());
         
         // Take care of some things here...
@@ -72,8 +70,8 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         std::cout << "Reflective: " << reflective << "\n";
         reflective = reflective * energy;
         
-        if (reflective == Vec3f(0,0,0)) {
-            std::cout << "This material is not reflective\n";
+        if (diffuse != Vec3f(0,0,0)) {
+            std::cout << "This material diffuse\n";
             // Diffuse
             Vec3f normal = h.getNormal();
             Vec3f V = r.getDirection();
@@ -89,7 +87,7 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
                 kdtree->AddPhoton(p);
             }
         }
-        else {
+        if (reflective != Vec3f(0,0,0)) {
             std::cout << "This material is reflective\n";
             // Reflection
             Vec3f normal = h.getNormal();
@@ -105,26 +103,7 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
                 kdtree->AddPhoton(p);
             }
         }
-        
-        // And handle those differently
-        
-//        // Reflection
-//        Vec3f normal = h.getNormal();
-//        Vec3f V = r.getDirection();
-//        Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
-//        R_dir.Normalize();
-//        //R_dir *= -1.0;
-//        Ray R(pos, R_dir);
-//        Hit nHit;
-//        TracePhoton(pos, R_dir, reflective, iter+1);
-        
-//        Photon p(pos, direction, energy, iter);
-//        kdtree->AddPhoton(p);
     }
-    
-    
-//    Photon(const Vec3f &p, const Vec3f &d, const Vec3f &e, int b) :
-//    position(p),direction_from(d),energy(e),bounce(b) {}
 }
 
 
