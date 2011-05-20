@@ -75,11 +75,8 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
             // Diffuse
             Vec3f normal = h.getNormal();
             Vec3f V = r.getDirection();
-            //Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
-            //Vec3f R_dir = MirrorDirection(normal, V);
             Vec3f R_dir = RandomDiffuseDirection(normal);
             R_dir.Normalize();
-            //R_dir *= -1.0;
             Ray R(pos, R_dir);
             TracePhoton(pos, R_dir, diffuse, iter+1);
             if (iter != 0) {
@@ -92,10 +89,8 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
             // Reflection
             Vec3f normal = h.getNormal();
             Vec3f V = r.getDirection();
-            //Vec3f R_dir = V - 2 * V.Dot3(normal) * normal;
             Vec3f R_dir = MirrorDirection(normal, V);
             R_dir.Normalize();
-            //R_dir *= -1.0;
             Ray R(pos, R_dir);
             TracePhoton(pos, R_dir, reflective, iter+1);
             if (iter != 0) {
