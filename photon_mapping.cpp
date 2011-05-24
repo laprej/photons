@@ -322,45 +322,25 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
     // Temporary photon holder
     std::vector<Photon> photons;
     
-    // Temp photon to figure out which branch to take
-    Photon p(point, direction_from, Vec3f(0,0,0), 0);
     
-    std::stack<const KDTree *> pStack;
-    
-    // Find the leaf where p would go
-    const KDTree *kd = kdtree;
-    while (kd->PhotonInCell(p)) {
-        pStack.push(kd);
-        
-        if (kd->isLeaf()) {
-            break;
-        }
-        
-        const KDTree *c1 = kd->getChild1();
-        const KDTree *c2 = kd->getChild2();
-        
-        if (c1->PhotonInCell(p)) {
-            kd = c1;
-            continue;
-        }
-        kd = c2;
-    }
 
 //    std::cout << "getMin(): " << kd->getMin() << "\n";
 //    std::cout << "getMax(): " << kd->getMax() << "\n";
 //    
 //    std::cout << "We finished with " << count_photons(kd) << " neighbors\n";
     
-    Vec3f min = kd->getMin();
-    Vec3f max = kd->getMax();
+    const Vec3f exp = Vec3f(0.5, 0.5, 0.5);
+    
+    Vec3f min = point - exp;
+    Vec3f max = point + exp;
     
     BoundingBox b(min, max);
     kdtree->CollectPhotonsInBox(b, photons);
     
     while (photons.size() < collect) {
         photons.clear();
-        min -= Vec3f(1,1,1);
-        max += Vec3f(1,1,1);
+        min -= exp;
+        max += exp;
         b.Set(min, max);
         kdtree->CollectPhotonsInBox(b, photons);
     }
@@ -372,7 +352,7 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
     double maxDist = 0.0;
     
     for (int i = 0; i < photons.size(); ++i) {
-        double d = DistanceBetweenTwoPoints(p.getPosition(), photons[i].getPosition());
+        double d = DistanceBetweenTwoPoints(point, photons[i].getPosition());
         if (d > maxDist) {
             maxDist = d;
         }
