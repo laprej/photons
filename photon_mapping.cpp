@@ -317,47 +317,57 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
     // ASSIGNMENT: GATHER THE INDIRECT ILLUMINATION FROM THE PHOTON MAP
     // ================================================================
     
-    int collect = args->num_photons_to_collect;
+    const int collect = args->num_photons_to_collect;
     
     // Temporary photon holder
     std::vector<Photon> photons;
-    
-    
-
-//    std::cout << "getMin(): " << kd->getMin() << "\n";
-//    std::cout << "getMax(): " << kd->getMax() << "\n";
-//    
-//    std::cout << "We finished with " << count_photons(kd) << " neighbors\n";
     
     const Vec3f exp = Vec3f(0.5, 0.5, 0.5);
     
     Vec3f min = point - exp;
     Vec3f max = point + exp;
     
+    std::vector<std::pair<int, double> > pairs;
+        
     BoundingBox b(min, max);
-    kdtree->CollectPhotonsInBox(b, photons);
     
-    while (photons.size() < collect) {
+    while (1) {
+        
+        kdtree->CollectPhotonsInBox(b, photons);
+        
+        while (photons.size() < collect) {
+            photons.clear();
+            min -= exp;
+            max += exp;
+            b.Set(min, max);
+            kdtree->CollectPhotonsInBox(b, photons);
+        }
+        
+        //std::cout << "We have " << photons.size() << " neighbors\n";
+        
+        for (int i = 0; i < photons.size(); ++i) {
+            double d = DistanceBetweenTwoPoints(point, photons[i].getPosition());
+            // TODO: Should maxDim below be divided by 2.0 or not???
+            if (d > b.maxDim() /* / 2.0 */ ) {
+                //std::cout << "throwing this one out, too far!\n";
+                //std::cout << "d is " << d << " and maxDim is " << b.maxDim() << "\n";
+                continue;
+            }
+            pairs.push_back(std::make_pair(i, d));
+        }
+        
+        if (pairs.size() >= collect) {
+            break;
+        }
+        
         photons.clear();
         min -= exp;
         max += exp;
         b.Set(min, max);
-        kdtree->CollectPhotonsInBox(b, photons);
     }
     
-//    std::cout << "We have " << photons.size() << " neighbors\n";
-    
-    std::vector<std::pair<int, double> > pairs;
-    
-    double maxDist = 0.0;
-    
-    for (int i = 0; i < photons.size(); ++i) {
-        double d = DistanceBetweenTwoPoints(point, photons[i].getPosition());
-        if (d > maxDist) {
-            maxDist = d;
-        }
-        pairs.push_back(std::make_pair(i, d));
-    }
+    // Just a sanity check.
+    assert(pairs.size() >= collect);
     
     std::sort(pairs.begin(), pairs.end(), sort);
     
@@ -365,13 +375,14 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
         pairs.pop_back();
     }
     
-    maxDist = pairs.back().second;
+    double maxDist = pairs.back().second;
     
     Vec3f ne;
     
     for (int i = 0; i < pairs.size(); ++i) {
         Vec3f te = photons[pairs[i].first].getEnergy();
-        te /= maxDist * maxDist;
+        // TODO: Is the following multiplication good or bad???
+        te /= maxDist;// * maxDist;
         ne += te;
     }
     
