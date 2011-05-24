@@ -46,7 +46,7 @@ class KDTree {
   // =========
   // MODIFIERS
   void AddPhoton(const Photon &p);
-  bool PhotonInCell(const Photon &p);
+  bool PhotonInCell(const Photon &p) const;
 
  private:
 

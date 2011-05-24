@@ -20,7 +20,7 @@ KDTree::~KDTree() {
 // ==================================================================
 // HELPER FUNCTIONS
 
-bool KDTree::PhotonInCell(const Photon &p) {
+bool KDTree::PhotonInCell(const Photon &p) const {
   const Vec3f& min = bbox.getMin();
   const Vec3f& max = bbox.getMax();
   const Vec3f &position = p.getPosition();
