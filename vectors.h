@@ -69,6 +69,8 @@ public:
   // COMMON VECTOR OPERATIONS
   double Length() const {
     return sqrt(data[0]*data[0]+data[1]*data[1]+data[2]*data[2]); }
+    double Length2() const {
+        return data[0]*data[0]+data[1]*data[1]+data[2]*data[2]; }
   void Normalize() {
     double length = Length();
     if (length > 0) { Scale (1/length); } }

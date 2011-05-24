@@ -49,6 +49,11 @@ inline double DistanceBetweenTwoPoints(const Vec3f &p1, const Vec3f &p2) {
   return v.Length();
 }
 
+inline double DistanceBetweenTwoPoints2(const Vec3f &p1, const Vec3f &p2) {
+    Vec3f v = p1-p2;
+    return v.Length2();
+}
+
 inline double AreaOfTriangle(double a, double b, double c) {
   // from the lengths of the 3 edges, compute the area
   // Area of Triangle = (using Heron's Formula)

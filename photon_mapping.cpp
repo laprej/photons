@@ -346,9 +346,9 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
         //std::cout << "We have " << photons.size() << " neighbors\n";
         
         for (int i = 0; i < photons.size(); ++i) {
-            double d = DistanceBetweenTwoPoints(point, photons[i].getPosition());
+            double d = DistanceBetweenTwoPoints2(point, photons[i].getPosition());
             // TODO: Should maxDim below be divided by 2.0 or not???
-            if (d > b.maxDim() /* / 2.0 */ ) {
+            if (d > b.maxDim() * b.maxDim() /* / 2.0 */ ) {
                 //std::cout << "throwing this one out, too far!\n";
                 //std::cout << "d is " << d << " and maxDim is " << b.maxDim() << "\n";
                 continue;
