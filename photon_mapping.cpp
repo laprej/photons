@@ -70,8 +70,11 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         Vec3f reflective = m->getReflectiveColor();
         //std::cout << "Reflective: " << reflective << "\n";
         reflective = reflective * energy;
+        Vec3f transmissive = m->getTransmissiveColor();
+        
         
         static const Vec3f zero = Vec3f(0,0,0);
+        double photon_prob = GLOBAL_mtrand.rand();
         
         if (diffuse != zero) {
             //std::cout << "This material diffuse\n";
@@ -101,7 +104,20 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
                 kdtree->AddPhoton(p);
             }
         }
-        // We need another case for transmissive
+        if (transmissive != zero) {
+            //std::cout << "This material is reflective\n";
+            // Reflection
+            Vec3f normal = h.getNormal();
+            Vec3f V = r.getDirection();
+            Vec3f R_dir = zero;
+            R_dir.Normalize();
+            Ray R(pos, R_dir);
+            TracePhoton(pos, R_dir, reflective, iter+1);
+            if (iter != 0) {
+                Photon p(pos, direction, reflective, iter);
+                kdtree->AddPhoton(p);
+            }
+        }
     }
 }
 

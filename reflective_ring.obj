@@ -2,16 +2,19 @@ material
 diffuse 0 0 0
 reflective 0 0 0
 emitted 30 30 30
+transmitted 0 0 0
 
 material
 texture_file wood.ppm
 reflective 0 0 0
 emitted 0 0 0
+transmitted 0 0 0
 
 material 
 diffuse 0.1 0.1 0.1
 reflective 0.6 0.4 0.2
 emitted 0 0 0
+transmitted 0 0 0
 
 m 0
 v -6 10 6
