@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{mcguire09imagespace}
+Morgan Mc{G}uire and David Luebke,
+\newblock ``Hardware-accelerated global illumination by image space photon
+  mapping,''
+\newblock in {\em Proceedings of the 2009 ACM SIGGRAPH/EuroGraphics conference
+  on High Performance Graphics}, New York, NY, USA, August 2009, ACM.
+
+\bibitem{Schmitz:2006:ERW:1164717.1164730}
+Arne Schmitz and Martin Wenig,
+\newblock ``The effect of the radio wave propagation model in mobile ad hoc
+  networks,''
+\newblock in {\em Proceedings of the 9th ACM international symposium on
+  Modeling analysis and simulation of wireless and mobile systems}, New York,
+  NY, USA, 2006, MSWiM '06, pp. 61--67, ACM.
+
+\bibitem{Schmitz:2006:WPU:1163610.1163638}
+Arne Schmitz and Leif Kobbelt,
+\newblock ``Wave propagation using the photon path map,''
+\newblock in {\em Proceedings of the 3rd ACM international workshop on
+  Performance evaluation of wireless ad hoc, sensor and ubiquitous networks},
+  New York, NY, USA, 2006, PE-WASUN '06, pp. 158--161, ACM.
+
+\bibitem{ross}
+Christopher~D. Carothers, David Bauer, and Shawn Pearce,
+\newblock ``{ROSS}: A high-performance, low-memory, modular {T}ime {W}arp
+  system,''
+\newblock {\em Journal of Parallel and Distributed Computing}, vol. 62, no. 11,
+  pp. 1648 -- 1669, 2002.
+
+\bibitem{Nutaro:2006:DEM:1138464.1138468}
+James Nutaro,
+\newblock ``A discrete event method for wave simulation,''
+\newblock {\em ACM Trans. Model. Comput. Simul.}, vol. 16, pp. 174--195, April
+  2006.
+
+\end{thebibliography}
