@@ -118,6 +118,7 @@ bool Face::plane_intersect(const Ray &r, Hit &h, bool intersect_backfacing) cons
   double t = numer / denom;
   if (t > EPSILON && t < h.getT()) {
     h.set(t,this->getMaterial(),normal);
+    h.setT2(t);
     assert (h.getT() >= EPSILON);
     return 1;
   }
