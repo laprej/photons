@@ -19,6 +19,7 @@ public:
     // CONSTRUCTOR & DESTRUCTOR
     Hit(double init_t = FLT_MAX) { 
         t = init_t;
+        t2 = init_t;
         material = NULL;
         normal = Vec3f(0,0,0); 
         texture_s = 0;
@@ -26,6 +27,7 @@ public:
     }
     Hit(const Hit &h) { 
         t = h.t; 
+        t2 = h.t2;
         material = h.material; 
         normal = h.normal; 
         texture_s = h.texture_s;
@@ -35,6 +37,7 @@ public:
     
     // ACCESSORS
     double getT() const { return t; }
+    double getT2() const { return t2; }
     Material* getMaterial() const { return material; }
     Vec3f getNormal() const { return normal; }
     double get_s() const { return texture_s; }
@@ -43,16 +46,24 @@ public:
     // MODIFIER
     void set(double _t, Material *m, Vec3f n) {
         t = _t; material = m; normal = n; 
-        texture_s = 0; texture_t = 0; }
+        texture_s = 0; texture_t = 0;
+    }
     
     void setTextureCoords(double t_s, double t_t) {
         texture_s = t_s; texture_t = t_t; 
+    }
+    
+    void setT2(double d) {
+        t2 = d;
+        assert(t2 >= t && "t2 < t: apparent logic flaw");
     }
     
 private: 
     
     // REPRESENTATION
     double t;
+    // Second hit point!  Useful for transmissive object ray tracing
+    double t2;
     Material *material;
     Vec3f normal;
     double texture_s, texture_t;

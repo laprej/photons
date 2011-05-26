@@ -57,12 +57,14 @@ bool Sphere::intersect(const Ray &r, Hit &h) const {
             Vec3f norm = r.getOrigin() + t1 * r.getDirection() - center;
             norm.Normalize();
             h.set(t1, material, norm);
+            h.setT2(t2);
         }
         else if (t2 > 0.001) {
             // t2 is closer than t1 so it must be the point we want
             Vec3f norm = r.getOrigin() + t2 * r.getDirection() - center;
             norm.Normalize();
             h.set(t2, material, norm);
+            h.setT2(t1);
         }
         else
             return false;

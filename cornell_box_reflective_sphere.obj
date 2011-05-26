@@ -2,31 +2,37 @@ material
 diffuse 0.8 0.8 0.8
 reflective 0 0 0
 emitted 1.27 1.27 1.27
+transmitted 0 0 0
 
 material
 diffuse 0.84 0.84 0.84
 reflective 0 0 0
 emitted 0 0 0
+transmitted 0 0 0
 
 material 
 diffuse 0.54 0.54 0.54
 reflective 0 0 0
 emitted 0 0 0
+transmitted 0 0 0
 
 material 
 diffuse 1 0 0 
 reflective 0 0 0
 emitted 0 0 0
+transmitted 0 0 0
 
 material 
 diffuse 0 0 1
 reflective 0 0 0
 emitted 0 0 0
+transmitted 0 0 0
 
 material
 diffuse 0 0 0 
 reflective 0.8 0.8 0.8
 emitted 0 0 0
+transmitted 0 0 0
 
 v -1 -1 -1
 v 1 -1 -1
