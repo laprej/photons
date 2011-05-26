@@ -105,14 +105,12 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
             }
         }
         if (transmissive != zero) {
-            //std::cout << "This material is reflective\n";
-            // Reflection
             Vec3f normal = h.getNormal();
             Vec3f V = r.getDirection();
-            Vec3f R_dir = zero;
+            Vec3f R_dir = V;
             R_dir.Normalize();
-            Ray R(pos, R_dir);
-            TracePhoton(pos, R_dir, reflective, iter+1);
+            //Ray R(pos, R_dir);
+            //TracePhoton(pos, R_dir, reflective, iter+1);
             if (iter != 0) {
                 Photon p(pos, direction, reflective, iter);
                 kdtree->AddPhoton(p);
