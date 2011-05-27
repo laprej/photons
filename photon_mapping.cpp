@@ -71,6 +71,7 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         //std::cout << "Reflective: " << reflective << "\n";
         reflective = reflective * energy;
         Vec3f transmissive = m->getTransmissiveColor();
+        transmissive = transmissive * energy;
         
         
         static const Vec3f zero = Vec3f(0,0,0);
@@ -105,14 +106,16 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
             }
         }
         if (transmissive != zero) {
+            Vec3f pos2 = r.pointAtParameter(h.getT2() + EPSILON);
+            
             Vec3f normal = h.getNormal();
             Vec3f V = r.getDirection();
             Vec3f R_dir = V;
             R_dir.Normalize();
-            //Ray R(pos, R_dir);
-            //TracePhoton(pos, R_dir, reflective, iter+1);
+            Ray R(pos2, R_dir);
+            TracePhoton(pos2, R_dir, transmissive, iter+1);
             if (iter != 0) {
-                Photon p(pos, direction, reflective, iter);
+                Photon p(pos, direction, transmissive, iter);
                 kdtree->AddPhoton(p);
             }
         }

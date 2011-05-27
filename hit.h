@@ -55,7 +55,7 @@ public:
     
     void setT2(double d) {
         t2 = d;
-        assert(t2 >= t && "t2 < t: apparent logic flaw");
+        //assert(t2 >= t && "t2 < t: apparent logic flaw");
     }
     
 private: 

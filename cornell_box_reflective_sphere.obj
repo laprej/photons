@@ -32,7 +32,7 @@ material
 diffuse 0 0 0 
 reflective 0.8 0.8 0.8
 emitted 0 0 0
-transmitted 0 0 0
+transmitted 0.8 0.8 0.8
 
 v -1 -1 -1
 v 1 -1 -1
