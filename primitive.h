@@ -13,21 +13,21 @@ class ArgParser;
 // rasterized for OpenGL and for use in radiosity.
 
 class Primitive {
- public:
-  virtual ~Primitive() {}
-
-  // accessor
-  Material* getMaterial() const { return material; }
-
-  // for ray tracing
-  virtual bool intersect(const Ray &r, Hit &h) const = 0;
-
-  // for OpenGL rendering & radiosity
-  virtual void addRasterizedFaces(Mesh *m, ArgParser *args) = 0;
-
- protected:
-  // REPRESENTATION
-  Material *material;
+public:
+    virtual ~Primitive() {}
+    
+    // accessor
+    Material* getMaterial() const { return material; }
+    
+    // for ray tracing
+    virtual bool intersect(const Ray &r, Hit &h) const = 0;
+    
+    // for OpenGL rendering & radiosity
+    virtual void addRasterizedFaces(Mesh *m, ArgParser *args) = 0;
+    
+protected:
+    // REPRESENTATION
+    Material *material;
 };
 
 #endif
