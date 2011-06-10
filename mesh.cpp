@@ -190,6 +190,7 @@ void Mesh::Load(const std::string &input_file, ArgParser *_args) {
     background_color = Vec3f(1,1,1);
     
     while (objfile >> token) {
+    begin:
         if (token == "v") {
             double x,y,z;
             objfile >> x >> y >> z;
@@ -259,10 +260,16 @@ void Mesh::Load(const std::string &input_file, ArgParser *_args) {
             objfile >> token >> r >> g >> b;
             assert (token == "emitted");
             emitted = Vec3f(r,g,b);
-            objfile >> token >> r >> g >> b;
-            assert (token == "transmitted");
-            transmitted = Vec3f(r,g,b);
-            materials.push_back(new Material(texture_file,diffuse,reflective,emitted,transmitted));
+            objfile >> token;
+            if (token == "transmitted") {
+                objfile >> r >> g >> b;
+                transmitted = Vec3f(r,g,b);
+                materials.push_back(new Material(texture_file,diffuse,reflective,emitted,transmitted));
+            }
+            else {
+                materials.push_back(new Material(texture_file,diffuse,reflective,emitted,transmitted));
+                goto begin;
+            }
         } else {
             std::cout << "UNKNOWN TOKEN " << token << std::endl;
             exit(0);

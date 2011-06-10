@@ -17,6 +17,8 @@ class Radiosity;
 // The basic class to shoot photons within the scene and collect and
 // process the nearest photons for use in the raytracer
 
+extern Vec3f global_energy;
+
 class PhotonMapping {
 
  public:
@@ -45,7 +47,7 @@ class PhotonMapping {
  private:
 
   // trace a single photon
-  void TracePhoton(const Vec3f &position, const Vec3f &direction, const Vec3f &energy, int iter);
+  void TracePhoton(const Vec3f &position, const Vec3f &direction, const Vec3f &energy, int iter) const;
 
   // helper functions for visualization
   void RenderPhotonPositions();

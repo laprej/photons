@@ -58,6 +58,7 @@ bool Sphere::intersect(const Ray &r, Hit &h) const {
             norm.Normalize();
             h.set(t1, material, norm);
             h.setT2(t2);
+            h.setPrim((Primitive*)this);
         }
         else if (t2 > 0.001) {
             // t2 is closer than t1 so it must be the point we want
@@ -65,6 +66,7 @@ bool Sphere::intersect(const Ray &r, Hit &h) const {
             norm.Normalize();
             h.set(t2, material, norm);
             h.setT2(t1);
+            h.setPrim((Primitive*)this);
         }
         else
             return false;

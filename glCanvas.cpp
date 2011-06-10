@@ -21,6 +21,7 @@
 #include "mesh.h"
 #include "raytree.h"
 #include "utils.h"
+#include "primitive.h"
 
 // ========================================================
 // static variables of GLCanvas class
@@ -272,6 +273,20 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
             photon_mapping->TracePhotons();
             Render();
             break; }
+        case 'd': case 'D': {
+            Vec3f en;
+            int num_prims = mesh->numPrimitives();
+            for (int i = 0; i < num_prims; ++i) {
+                std::vector<Photon> phos = mesh->getPrimitive(i)->getPhotons();
+                int q = mesh->getPrimitive(i)->getPhotons().size();
+                std::cout << "Primitive " << i << " has " << q << " photons\n";
+                for (int j = 0; j < q; ++j) {
+                    en += phos[j].getEnergy();
+                }
+                std::cout << "en is " << en << "\n";
+            }
+            break;
+        }
         case 'g':  case 'G': { 
             args->gather_indirect = true;
             args->raytracing_animation = !args->raytracing_animation;

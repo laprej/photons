@@ -1,6 +1,9 @@
 #ifndef _PRIMITIVE_H_
 #define _PRIMITIVE_H_
 
+#include <vector>
+#include "photon.h"
+
 class Mesh;
 class Ray;
 class Hit;
@@ -25,9 +28,23 @@ public:
     // for OpenGL rendering & radiosity
     virtual void addRasterizedFaces(Mesh *m, ArgParser *args) = 0;
     
+    // For photon mapping radio transmission project
+    void addPhoton(const Photon &p) {
+        photons.push_back(p);
+    }
+    
+    std::vector<Photon> getPhotons() {
+        return photons;
+    }
+    
+    void resetPhotons() {
+        photons.clear();
+    }
+    
 protected:
     // REPRESENTATION
     Material *material;
+    std::vector<Photon> photons;
 };
 
 #endif

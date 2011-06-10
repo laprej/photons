@@ -7,6 +7,7 @@
 #include "ray.h"
 
 class Material;
+class Primitive;
 
 // Hit class mostly copied from Peter Shirley and Keith Morley
 // ====================================================================
@@ -24,6 +25,7 @@ public:
         normal = Vec3f(0,0,0); 
         texture_s = 0;
         texture_t = 0;
+        prim = 0;
     }
     Hit(const Hit &h) { 
         t = h.t; 
@@ -32,6 +34,7 @@ public:
         normal = h.normal; 
         texture_s = h.texture_s;
         texture_t = h.texture_t;
+        prim = h.prim;
     }
     ~Hit() {}
     
@@ -42,6 +45,7 @@ public:
     Vec3f getNormal() const { return normal; }
     double get_s() const { return texture_s; }
     double get_t() const { return texture_t; }
+    Primitive * getPrim() const { return prim; }
     
     // MODIFIER
     void set(double _t, Material *m, Vec3f n) {
@@ -58,6 +62,10 @@ public:
         //assert(t2 >= t && "t2 < t: apparent logic flaw");
     }
     
+    void setPrim(Primitive *p) {
+        prim = p;
+    }
+    
 private: 
     
     // REPRESENTATION
@@ -67,6 +75,7 @@ private:
     Material *material;
     Vec3f normal;
     double texture_s, texture_t;
+    Primitive *prim;
 };
 
 inline std::ostream &operator<<(std::ostream &os, const Hit &h) {
