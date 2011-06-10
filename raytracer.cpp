@@ -27,7 +27,7 @@ bool RayTracer::CastRay(Ray &ray, Hit &h, bool use_rasterized_patches) const {
             if (f->intersect(ray,h,args->intersect_backfacing)) answer = true;
         }
     } else {
-        int num_primitives = mesh->numPrimitives();
+        size_t num_primitives = mesh->numPrimitives();
         for (int i = 0; i < num_primitives; i++) {
             if (mesh->getPrimitive(i)->intersect(ray,h)) answer = true;
         }
@@ -77,7 +77,7 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
     
     // ----------------------------------------------
     // add contributions from each light that is not in shadow
-    int num_lights = mesh->getLights().size();
+    size_t num_lights = mesh->getLights().size();
     for (int i = 0; i < num_lights; i++) {
         Face *f = mesh->getLights()[i];
         Vec3f pointOnLight = f->computeCentroid();
@@ -92,7 +92,7 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
             
             bool allClear = true;
             
-            int num_primitives = mesh->numPrimitives();
+            size_t num_primitives = mesh->numPrimitives();
             for (int j = 0; j < num_primitives; ++j) {
                 Primitive *p = mesh->getPrimitive(j);
                 Hit lightHit;
@@ -127,7 +127,7 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
                 
                 bool allClear = true;
                 
-                int num_primitives = mesh->numPrimitives();
+                size_t num_primitives = mesh->numPrimitives();
                 for (int j = 0; j < num_primitives; ++j) {
                     Primitive *p = mesh->getPrimitive(j);
                     Hit lightHit;

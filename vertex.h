@@ -12,11 +12,11 @@ public:
 
   // ========================
   // CONSTRUCTOR & DESTRUCTOR
-  Vertex(int i, const Vec3f &pos) : position(pos) { index = i; s = 0; t = 0; }
+  Vertex(size_t i, const Vec3f &pos) : position(pos) { index = i; s = 0; t = 0; }
   
   // =========
   // ACCESSORS
-  int getIndex() const { return index; }
+  size_t getIndex() const { return index; }
   double x() const { return position.x(); }
   double y() const { return position.y(); }
   double z() const { return position.z(); }
@@ -46,7 +46,7 @@ private:
 
   // this is the index from the original .obj file.
   // technically not part of the half-edge data structure
-  int index;  
+  size_t index;  
 
   // NOTE: the vertices don't know anything about adjacency.  In some
   // versions of this data structure they have a pointer to one of

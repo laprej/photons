@@ -4,7 +4,7 @@
 
 // ====================================================================================
 bool Image::Save(const std::string &filename) const {
-  int len = filename.length();
+  size_t len = filename.length();
   if (!(len > 4 && filename.substr(len-4) == std::string(".ppm"))) {
     std::cerr << "ERROR: This is not a PPM filename: " << filename << std::endl;
     return false;
@@ -36,7 +36,7 @@ bool Image::Save(const std::string &filename) const {
 
 // ====================================================================================
 bool Image::Load(const std::string &filename) {
-  int len = filename.length();
+  size_t len = filename.length();
   if (!(len > 4 && filename.substr(len-4) == std::string(".ppm"))) {
     std::cerr << "ERROR: This is not a PPM filename: " << filename << std::endl;
     return false;

@@ -275,10 +275,10 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
             break; }
         case 'd': case 'D': {
             Vec3f en;
-            int num_prims = mesh->numPrimitives();
+            size_t num_prims = mesh->numPrimitives();
             for (int i = 0; i < num_prims; ++i) {
                 std::vector<Photon> phos = mesh->getPrimitive(i)->getPhotons();
-                int q = mesh->getPrimitive(i)->getPhotons().size();
+                size_t q = mesh->getPrimitive(i)->getPhotons().size();
                 std::cout << "Primitive " << i << " has " << q << " photons\n";
                 for (int j = 0; j < q; ++j) {
                     en += phos[j].getEnergy();

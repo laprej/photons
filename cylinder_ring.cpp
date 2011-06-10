@@ -128,7 +128,7 @@ void CylinderRing::addRasterizedFaces(Mesh *m, ArgParser *args) {
   int i;
   int va,vb,vc,vd;
   Vertex *a,*b,*c,*d;
-  int offset = m->numVertices(); 
+  size_t offset = m->numVertices(); 
   // place vertices
   for (i = 0; i < crr; i++) {
     double s = i / double(crr);

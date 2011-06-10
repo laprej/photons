@@ -104,9 +104,9 @@ void Sphere::addRasterizedFaces(Mesh *m, ArgParser *args) {
     int v = args->sphere_vert;
     assert (h % 2 == 0);
     int i,j;
-    int va,vb,vc,vd;
+    size_t va,vb,vc,vd;
     Vertex *a,*b,*c,*d;
-    int offset = m->numVertices();
+    size_t offset = m->numVertices();
     
     // place vertices
     m->addVertex(center+radius*Vec3f(0,-1,0));  // bottom vertex

@@ -138,7 +138,7 @@ void PhotonMapping::TracePhotons() {
     
     // first, throw away any existing photons
     delete kdtree;
-    int num_prims = mesh->numPrimitives();
+    size_t num_prims = mesh->numPrimitives();
     for (int i = 0; i < num_prims; ++i) {
         Primitive *p = mesh->getPrimitive(i);
         p->resetPhotons();
@@ -209,7 +209,7 @@ void PhotonMapping::RenderPhotonPositions() {
         todo.pop_back(); 
         if (node->isLeaf()) {
             const std::vector<Photon> &photons = node->getPhotons();
-            int num_photons = photons.size();
+            size_t num_photons = photons.size();
             for (int i = 0; i < num_photons; i++) {
                 const Photon &p = photons[i];
                 Vec3f energy = p.getEnergy()*args->num_photons_to_shoot;
@@ -244,7 +244,7 @@ void PhotonMapping::RenderPhotonDirections() {
         todo.pop_back(); 
         if (node->isLeaf()) {
             const std::vector<Photon> &photons = node->getPhotons();
-            int num_photons = photons.size();
+            size_t num_photons = photons.size();
             for (int i = 0; i < num_photons; i++) {
                 const Photon &p = photons[i];
                 const Vec3f a = p.getPosition();
