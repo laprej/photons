@@ -289,9 +289,6 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
                     intensity += en[j];
                 }
                 intensity /= 3.0;
-                if (intensity > 1.0) {
-                    intensity = 1.0;
-                }
                 mesh->getPrimitive(i)->setIntensity(intensity);
                 std::cout << "intensity is " << intensity << "\n";
             }

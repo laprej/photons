@@ -43,7 +43,15 @@ public:
     
     double getIntensity() { return intensity; }
     
-    void setIntensity(double d) { intensity = d; }
+    void setIntensity(double d) {
+        if (d < 0.0) {
+            d = 0.0;
+        }
+        if (d > 1.0) {
+            d = 1.0;
+        }
+        intensity = d;
+    }
     
 protected:
     // REPRESENTATION

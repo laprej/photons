@@ -368,7 +368,7 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
     // ASSIGNMENT: GATHER THE INDIRECT ILLUMINATION FROM THE PHOTON MAP
     // ================================================================
     
-    const int collect = args->num_photons_to_collect;
+    const unsigned int collect = args->num_photons_to_collect;
     
     // Temporary photon holder
     std::vector<Photon> photons;
@@ -395,7 +395,7 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
         
         //std::cout << "We have " << photons.size() << " neighbors\n";
         
-        for (int i = 0; i < photons.size(); ++i) {
+        for (unsigned int i = 0; i < photons.size(); ++i) {
             double d = DistanceBetweenTwoPoints2(point, photons[i].getPosition());
             // TODO: Should maxDim below be divided by 2.0 or not???
             if (d > b.maxDim() * b.maxDim() /* / 2.0 */ ) {
@@ -429,7 +429,7 @@ Vec3f PhotonMapping::GatherIndirect(const Vec3f &point, const Vec3f &normal, con
     
     Vec3f ne;
     
-    for (int i = 0; i < pairs.size(); ++i) {
+    for (unsigned int i = 0; i < pairs.size(); ++i) {
         Vec3f te = photons[pairs[i].first].getEnergy();
         // TODO: Is the following multiplication good or bad???
         te /= maxDist;// * maxDist;
