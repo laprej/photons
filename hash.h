@@ -33,7 +33,7 @@ class Triangle;
 // function based on the indices of the start and end vertices
 // ===================================================================================
 
-inline unsigned int ordered_two_int_hash(unsigned int a, unsigned int b) {
+inline size_t ordered_two_int_hash(size_t a, size_t b) {
   return LARGE_PRIME_A * a + LARGE_PRIME_B * b;
 }
 
@@ -59,7 +59,7 @@ struct orderedsamevertexpair {
 // parent vertices, smaller index first
 // ===================================================================================
 
-inline unsigned int unordered_two_int_hash(unsigned int a, unsigned int b) {
+inline size_t unordered_two_int_hash(size_t a, size_t b) {
   assert (a != b);
   if (b < a) {
     return ordered_two_int_hash(b,a);
