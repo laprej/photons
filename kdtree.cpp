@@ -97,7 +97,7 @@ void KDTree::CollectPhotonsInBox(const BoundingBox &bb, std::vector<Photon> &pho
       // if this cell overlaps & is a leaf, add all of the photons into the master list
       // NOTE: these photons may not be inside of the query bounding box
       const std::vector<Photon> &photons2 = node->getPhotons();
-      size_t num_photons = photons2.size();
+      int num_photons = photons2.size();
       for (int i = 0; i < num_photons; i++) {
 	photons.push_back(photons2[i]);
       }
@@ -145,7 +145,7 @@ void KDTree::SplitCell() {
   // create two new children
   child1 = new KDTree(BoundingBox(min1,max1),depth+1);
   child2 = new KDTree(BoundingBox(min2,max2),depth+1);
-  size_t num_photons = photons.size();
+  int num_photons = photons.size();
   std::vector<Photon> tmp = photons;
   photons.clear();
   // add all the photons to one of those children

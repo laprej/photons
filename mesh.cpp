@@ -62,7 +62,7 @@ Mesh::~Mesh() {
 // =======================================================================
 
 Vertex* Mesh::addVertex(const Vec3f &position) {
-    size_t index = numVertices();
+    int index = numVertices();
     vertices.push_back(new Vertex(index,position));
     // extend the bounding box to include this point
     if (bbox == NULL) 

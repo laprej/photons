@@ -94,7 +94,7 @@ private:
   // REPRESENTATION
   Mesh *mesh;
   ArgParser *args;
-  size_t num_faces;
+  int num_faces;
   RayTracer *raytracer;
   PhotonMapping *photon_mapping;
 

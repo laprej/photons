@@ -37,10 +37,10 @@ public:
     
   // ========
   // VERTICES
-  size_t numVertices() const { return vertices.size(); }
+  int numVertices() const { return vertices.size(); }
   Vertex* addVertex(const Vec3f &pos);
   // look up vertex by index from original .obj file
-  Vertex* getVertex(size_t i) const {
+  Vertex* getVertex(int i) const {
     assert (i >= 0 && i < numVertices());
     return vertices[i]; }
   // this creates a relationship between 3 vertices (2 parents, 1 child)
@@ -51,7 +51,7 @@ public:
 
   // =====
   // EDGES
-  size_t numEdges() const { return edges.size(); }
+  int numEdges() const { return edges.size(); }
   // this efficiently looks for an edge with the given vertices, using a hash table
   Edge* getEdge(Vertex *a, Vertex *b) const;
 
@@ -61,30 +61,30 @@ public:
 
   // ==================================
   // ACCESS THE QUADS (for ray tracing)
-  size_t numOriginalQuads() const { return original_quads.size(); }
+  int numOriginalQuads() const { return original_quads.size(); }
   Face* getOriginalQuad(int i) const {
     assert (i < numOriginalQuads());
     return original_quads[i]; }
 
   // =======================================
   // ACCESS THE PRIMITIVES (for ray tracing)
-  size_t numPrimitives() const { return primitives.size(); }
+  int numPrimitives() const { return primitives.size(); }
   Primitive* getPrimitive(int i) const {
     assert (i >= 0 && i < numPrimitives()); 
     return primitives[i]; }
   // ACCESS THE PRIMITIVES (for radiosity)
-  size_t numRasterizedPrimitiveFaces() const { return rasterized_primitive_faces.size(); }
-  Face* getRasterizedPrimitiveFace(size_t i) const {
+  int numRasterizedPrimitiveFaces() const { return rasterized_primitive_faces.size(); }
+  Face* getRasterizedPrimitiveFace(int i) const {
     assert (i >= 0 && i < numRasterizedPrimitiveFaces());
     return rasterized_primitive_faces[i]; }
 
   // ==============================================================
   // ACCESS THE SUBDIVIDED QUADS + RASTERIZED FACES (for radiosity)
-  size_t numFaces() const { return subdivided_quads.size() + rasterized_primitive_faces.size(); }
-  Face* getFace(size_t i) const {
-    size_t num_faces = numFaces();
+  int numFaces() const { return subdivided_quads.size() + rasterized_primitive_faces.size(); }
+  Face* getFace(int i) const {
+    int num_faces = numFaces();
     assert (i >= 0 && i < num_faces);
-    if (i < subdivided_quads.size()) return subdivided_quads[i];
+    if (i < (int)subdivided_quads.size()) return subdivided_quads[i];
     else return getRasterizedPrimitiveFace(i-subdivided_quads.size()); }
 
   // ============================
