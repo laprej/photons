@@ -113,6 +113,7 @@ public:
     num_photons_to_shoot = 10000;
     num_photons_to_collect = 100;
     gather_indirect = false;
+    render_energy = false;
   }
 
   // ==============
@@ -148,6 +149,7 @@ public:
   bool render_photons;
   bool render_kdtree;
   bool gather_indirect;
+  bool render_energy;
 };
 
 #endif

@@ -20,6 +20,7 @@
 #include "utils.h"
 #include "raytracer.h"
 #include <stack>
+#include "sphere.h"
 
 Vec3f global_energy;
 
@@ -316,6 +317,22 @@ void PhotonMapping::RenderKDTree() {
     }
     glEnd();
     glEnable(GL_LIGHTING);
+}
+
+void PhotonMapping::RenderEnergy()
+{
+    for (int i = 0; i < mesh->numPrimitives(); ++i) {
+        Primitive *p = mesh->getPrimitive(i);
+        if (Sphere *s = dynamic_cast<Sphere*> (p)) {
+            double r = s->getRadius();
+            Vec3f v = s->getCenter();
+            double intensity = s->getIntensity();
+            glColor3f(1.0-intensity, intensity, 0.0);
+            glTranslated(v.x(), v.y(), v.z());
+            GLUquadricObj *quad = gluNewQuadric();
+            gluSphere(quad, r, 30, 30);
+        }
+    }
 }
 
 bool sort(const std::pair<int, double> &l, const std::pair<int, double> &r)

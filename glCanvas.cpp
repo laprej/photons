@@ -284,7 +284,21 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
                     en += phos[j].getEnergy();
                 }
                 std::cout << "en is " << en << "\n";
+                double intensity = 0;
+                for (int j = 0; j < 3; ++j) {
+                    intensity += en[j];
+                }
+                intensity /= 3.0;
+                if (intensity > 1.0) {
+                    intensity = 1.0;
+                }
+                mesh->getPrimitive(i)->setIntensity(intensity);
+                std::cout << "intensity is " << intensity << "\n";
             }
+            args->render_photons = false;
+            args->render_kdtree = false;
+            args->render_energy = !args->render_energy;
+            Render();
             break;
         }
         case 'g':  case 'G': { 
@@ -535,6 +549,9 @@ void GLCanvas::Render() {
     }
     if (args->render_kdtree) {
         photon_mapping->RenderKDTree();
+    }
+    if (args->render_energy) {
+        photon_mapping->RenderEnergy();
     }
     
     glEndList();
