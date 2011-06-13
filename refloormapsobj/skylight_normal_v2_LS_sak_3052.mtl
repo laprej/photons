@@ -1,0 +1,84 @@
+newmtl Door
+Ka 0 0 0
+Kd 0.666667 0.596078 0.454902
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
+newmtl EXTERIOR_shading
+Ka 0 0 0
+Kd 0.811765 0.831373 0.807843
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
+newmtl EXTERNAL_adjspace
+Ka 0 0 0
+Kd 0.6 0.6 0.6
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
+newmtl GLASS_T75skylight
+Ka 0 0 0
+Kd 0.921569 0.952941 1
+Pd 0 0 0
+Ks 0.33 0.33 0.33
+d 0.25
+
+newmtl GLASS_T85North
+Ka 0 0 0
+Kd 0.807843 0.882353 0.929412
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 0.15
+
+newmtl GLASS_T85South
+Ka 0 0 0
+Kd 0.85098 0.898039 0.898039
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 0.15
+
+newmtl INVISIBLE_SENSOR_CorridL1
+Ka 0 0 0
+Kd 0.741176 0.262745 0.392157
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 0
+
+newmtl INVISIBLE_SENSOR_RecepL1
+Ka 0 0 0
+Kd 1 0.427451 0.282353
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 0
+
+newmtl OffWhite11
+Ka 0 0 0
+Kd 0.870588 0.870588 0.870588
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
+newmtl SENSOR_CorridL2
+Ka 0 0 0
+Kd 0.407843 0.407843 0.407843
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
+newmtl WallR70all
+Ka 0 0 0
+Kd 0.698039 0.698039 0.698039
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
+newmtl _DimGray_
+Ka 0 0 0
+Kd 0.411765 0.411765 0.411765
+Pd 1 1 1
+Ks 0.33 0.33 0.33
+d 1
+
