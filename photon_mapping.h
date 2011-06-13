@@ -43,6 +43,7 @@ class PhotonMapping {
   // for visualization
   void RenderPhotons();
   void RenderKDTree();
+  void RenderEnergy();
 
  private:
 

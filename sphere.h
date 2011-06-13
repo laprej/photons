@@ -23,6 +23,10 @@ public:
     // for OpenGL rendering & radiosity
     void addRasterizedFaces(Mesh *m, ArgParser *args);
     
+    double getRadius() { return radius; }
+    
+    Vec3f getCenter() { return center; }
+    
     friend std::ostream& operator<< (std::ostream &ostr, const Sphere &s) {
         ostr << "sphere centered at (" << s.center.x() << ", " << s.center.y() << ", " << s.center.z() << "), radius " << s.radius;
         return ostr; }

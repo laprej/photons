@@ -41,10 +41,15 @@ public:
         photons.clear();
     }
     
+    double getIntensity() { return intensity; }
+    
+    void setIntensity(double d) { intensity = d; }
+    
 protected:
     // REPRESENTATION
     Material *material;
     std::vector<Photon> photons;
+    double intensity;
 };
 
 #endif
