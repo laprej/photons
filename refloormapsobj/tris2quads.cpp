@@ -66,7 +66,8 @@ private:
 
 class Quad {
 public:
-	Vertex *W, *X, *Y, *Z;
+	//Vertex *W, *X, *Y, *Z;
+	unsigned int W, X, Y, Z;
 	friend ostream &operator<<(ostream &os, Quad &q);
 };
 
@@ -79,7 +80,7 @@ map<pair<Vertex*,Vertex*>,Vertex*> addedVertices;
 int main()
 {
 	/// Push a "fake" vertex in so we start at index 1
-	vlist.push_back(Vertex());
+	//vlist.push_back(Vertex());
 	
 	while (1) {
 		char c;
@@ -162,12 +163,12 @@ void Face::quadize()
 {
 	Vertex *center = centroid();
 	
-	///*
+	/*
 	cout << "V1:       " << *V1 << "\n";
 	cout << "V2:       " << *V2 << "\n";
 	cout << "V3:       " << *V3 << "\n";
 	cout << "Centroid: " << *center << "\n\n";
-	//*/
+	*/
 	/// We got it in CCW order I assume so we need to make sure we keep it!
 	/*
 	Vertex v2v1 = *V2 - *V1;
@@ -190,28 +191,28 @@ void Face::quadize()
 	Vertex *v1v3 = findEither(V3, V1);
 	
 	Quad q1;
-	q1.W = V1;
-	q1.X = v2v1;
-	q1.Y = center;
-	q1.Z = v1v3;
+	q1.W = V1->id;
+	q1.X = v2v1->id;
+	q1.Y = center->id;
+	q1.Z = v1v3->id;
 	
 	Quad q2;
-	q2.W = V2;
-	q2.X = v3v2;
-	q2.Y = center;
-	q2.Z = v2v1;
+	q2.W = V2->id;
+	q2.X = v3v2->id;
+	q2.Y = center->id;
+	q2.Z = v2v1->id;
 	
 	Quad q3;
-	q3.W = V3;
-	q3.X = v1v3;
-	q3.Y = center;
-	q3.Z = v3v2;
+	q3.W = V3->id;
+	q3.X = v1v3->id;
+	q3.Y = center->id;
+	q3.Z = v3v2->id;
 	
-	cout << "Adding " << q1 << "\n";
+	//cout << q1 << "\n";
 	qlist.push_back(q1);
-	cout << "Adding " << q2 << "\n";
+	//cout << q2 << "\n";
 	qlist.push_back(q2);
-	cout << "Adding " << q3 << "\n";
+	//cout << q3 << "\n";
 	qlist.push_back(q3);
 }
 
@@ -306,6 +307,7 @@ ostream &operator<<(ostream &os, Face &f)
 
 ostream &operator<<(ostream &os, Quad &q)
 {
+	/*
 	os << "f ";// << *q.W << " " << *q.X << " " << *q.Y << " " << *q.Z;
 	vector<Vertex>::iterator it;
 	
@@ -321,6 +323,8 @@ ostream &operator<<(ostream &os, Quad &q)
 	
 	it = find(vlist.begin(), vlist.end(), *q.Z);
 	os << it->id;
+	*/
+	os << "f " << q.W << " " << q.X << " " << q.Y << " " << q.Z;
 	
 	return os;
 }
