@@ -18,12 +18,14 @@ public:
         id = 0;
 	}
 	
+	/*
 	Vertex(const Vertex &v) {
 		x = v.x;
 		y = v.y;
 		z = v.z;
         id = 0;
 	}
+	*/
 	
 	Vertex &operator*=(double d) {
 		x *= d; y *= d; z *= d;
@@ -64,8 +66,8 @@ private:
 
 class Quad {
 public:
-	//Vertex *W, *X, *Y, *Z;
-	unsigned int W, X, Y, Z;
+	Vertex *W, *X, *Y, *Z;
+	//unsigned int W, X, Y, Z;
 	friend ostream &operator<<(ostream &os, Quad &q);
 };
 
@@ -78,7 +80,7 @@ map<pair<Vertex*,Vertex*>,Vertex*> addedVertices;
 int main()
 {
 	/// Push a "fake" vertex in so we start at index 1
-	//vlist.push_back(Vertex());
+	vlist.push_back(Vertex());
 	
 	while (1) {
 		char c;
@@ -93,7 +95,7 @@ int main()
 			Vertex v;
 			cin >> v;
 			vlist.push_back(v);
-            cout << v << endl;
+			cout << vlist.back() << endl;
 		}
 		
 		else if (c == 'f') {
@@ -152,11 +154,13 @@ Vertex *findEither(Vertex *v1, Vertex *v2)
 	v *= 0.5;
 	v = *v1 + v;
 	
-    cout << v << endl;
+    //cout << v << endl;
     
 	vlist.push_back(v);
     
     addedVertices[p] = &vlist.back();
+	
+	cout << vlist.back() << endl;
 	
 	return &vlist.back();
 }
@@ -193,22 +197,22 @@ void Face::quadize()
 	Vertex *v1v3 = findEither(V3, V1);
 	
 	Quad q1;
-	q1.W = V1->id;
-	q1.X = v2v1->id;
-	q1.Y = center->id;
-	q1.Z = v1v3->id;
+	q1.W = V1;
+	q1.X = v2v1;
+	q1.Y = center;
+	q1.Z = v1v3;
 	
 	Quad q2;
-	q2.W = V2->id;
-	q2.X = v3v2->id;
-	q2.Y = center->id;
-	q2.Z = v2v1->id;
+	q2.W = V2;
+	q2.X = v3v2;
+	q2.Y = center;
+	q2.Z = v2v1;
 	
 	Quad q3;
-	q3.W = V3->id;
-	q3.X = v1v3->id;
-	q3.Y = center->id;
-	q3.Z = v3v2->id;
+	q3.W = V3;
+	q3.X = v1v3;
+	q3.Y = center;
+	q3.Z = v3v2;
 	
     //cout << "Replacing triangle " << *this << "\n";
 	cout << q1 << "\n";
@@ -237,6 +241,7 @@ Vertex * Face::centroid()
 	ret.z = z;
 	
 	vlist.push_back(ret);
+	cout << vlist.back() << endl;
 	return &vlist.back();
 }
 
@@ -280,6 +285,7 @@ ostream &operator<<(ostream &os, Vertex &v)
     if (!v.id) {
         os << "v " << v.x << " " << v.y << " " << v.z;
         v.id = ++Vertex::vertex_id;
+		cerr << "ID is " << v.id << endl;
     }
 	return os;
 }
@@ -313,8 +319,13 @@ ostream &operator<<(ostream &os, Face &f)
 
 ostream &operator<<(ostream &os, Quad &q)
 {
+	assert(q.W->id);
+	assert(q.X->id);
+	assert(q.Y->id);
+	assert(q.Z->id);
+	
+	os << "f " << q.W->id << " " << q.X->id << " " << q.Y->id << " " << q.Z->id;
 	/*
-	os << "f ";// << *q.W << " " << *q.X << " " << *q.Y << " " << *q.Z;
 	vector<Vertex>::iterator it;
 	
 	it = find(vlist.begin(), vlist.end(), *q.W);
@@ -330,7 +341,7 @@ ostream &operator<<(ostream &os, Quad &q)
 	it = find(vlist.begin(), vlist.end(), *q.Z);
 	os << it->id;
 	*/
-	os << "f " << q.W << " " << q.X << " " << q.Y << " " << q.Z;
+	//os << "f " << q.W << " " << q.X << " " << q.Y << " " << q.Z;
 	
 	return os;
 }
