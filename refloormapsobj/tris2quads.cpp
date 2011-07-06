@@ -15,17 +15,15 @@ using namespace std;
 class Vertex {
 public:
 	Vertex() {
-		id = vertex_id++;
+        id = 0;
 	}
 	
-	/*
 	Vertex(const Vertex &v) {
 		x = v.x;
 		y = v.y;
 		z = v.z;
-		id = v.id;
+        id = 0;
 	}
-	*/
 	
 	Vertex &operator*=(double d) {
 		x *= d; y *= d; z *= d;
@@ -95,6 +93,7 @@ int main()
 			Vertex v;
 			cin >> v;
 			vlist.push_back(v);
+            cout << v << endl;
 		}
 		
 		else if (c == 'f') {
@@ -103,7 +102,6 @@ int main()
 			cin >> f;
 			
 			/// Really we should split it into three right here
-			//flist.push_back(f);
 			f.quadize();
 		}
 		
@@ -116,13 +114,13 @@ int main()
 		
 	}
 	
-	for (unsigned int i = 1; i < vlist.size(); i++) {
-		cout << vlist[i] << endl;
-	}
-	
-	for (unsigned int i = 0; i < qlist.size(); i++) {
-		cout << qlist[i] << endl;
-	}
+//	for (unsigned int i = 1; i < vlist.size(); i++) {
+//		cout << vlist[i] << endl;
+//	}
+//	
+//	for (unsigned int i = 0; i < qlist.size(); i++) {
+//		cout << qlist[i] << endl;
+//	}
 	
 	return 0;
 }
@@ -147,14 +145,18 @@ Vertex *findEither(Vertex *v1, Vertex *v2)
 	if (it != addedVertices.end()) {
 		return it->second;
 	}
-	
+    
 	/// If we got here, it hasn't been added, so we create & add now
 	Vertex v;
 	v = *v2 - *v1;
 	v *= 0.5;
 	v = *v1 + v;
 	
+    cout << v << endl;
+    
 	vlist.push_back(v);
+    
+    addedVertices[p] = &vlist.back();
 	
 	return &vlist.back();
 }
@@ -208,11 +210,12 @@ void Face::quadize()
 	q3.Y = center->id;
 	q3.Z = v3v2->id;
 	
-	//cout << q1 << "\n";
+    //cout << "Replacing triangle " << *this << "\n";
+	cout << q1 << "\n";
 	qlist.push_back(q1);
-	//cout << q2 << "\n";
+	cout << q2 << "\n";
 	qlist.push_back(q2);
-	//cout << q3 << "\n";
+	cout << q3 << "\n";
 	qlist.push_back(q3);
 }
 
@@ -274,7 +277,10 @@ istream &operator>>(istream &is, Vertex &v)
 
 ostream &operator<<(ostream &os, Vertex &v)
 {
-	os << "v " << v.x << " " << v.y << " " << v.z;
+    if (!v.id) {
+        os << "v " << v.x << " " << v.y << " " << v.z;
+        v.id = ++Vertex::vertex_id;
+    }
 	return os;
 }
 
