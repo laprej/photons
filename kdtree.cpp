@@ -1,7 +1,7 @@
 #include "kdtree.h"
 
 #define MAX_PHOTONS_BEFORE_SPLIT 100
-#define MAX_DEPTH 15
+#define MAX_DEPTH 18
 
 // ==================================================================
 // DESTRUCTOR
