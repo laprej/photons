@@ -1,7 +1,14 @@
-material
-texture_file green_mosaic.ppm
-reflective 0 0 0
+material 
+diffuse 0.1 0.1 0.1
+reflective 0.6 0.4 0.2
 emitted 0 0 0
+transmitted 0 0 0
+
+material
+diffuse 0 0 0
+reflective 0 0 0
+emitted 30 30 30
+transmitted 0 0 0
 
 m 0
 
@@ -24613,3 +24620,11 @@ v 637 48 4
 f 327 14269 14702 12525
 f 330 14683 14702 14269
 f 328 12525 14702 14683
+
+m 1
+
+v -6 250 6
+v -6 250 4
+v -4 250 4
+v -4 250 6
+f 14703 14704 14705 14706
