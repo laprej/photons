@@ -104,6 +104,13 @@
 % do the abstract
 \begin{abstract}
 %\section{Abstract}
+NEW ABSTRACT
+Accurate simulation of wireless radio signals is a challenging problem.  While primary effects can easily be calculated, second order effects are numerous and will often substantially alter the range of the radios.  Many modern simulators such as ns-3 use a simple, overly conservative calculation known as the Friis[Citation needed.] equation.
+This work demonstrates a more accurate estimate of radio waves via photon mapping[Cite.].  By utilizing photon mapping we can predict where photons will travel as well as the objects they will strike.  By collecting the number of photons to strike an object (e.g. an antenna) the effective signal strength can be determined.  If the signal strength is above a pre-specified cutoff then the receiving node can hear the transmitter.
+We show that this approach generates a higher fidelity estimate in most scenarios.  As expected, buildings and obstacles impact radio transmissions in ways that cannot be modeled by the Friis equation.  While the resolution of radio transmissions is increased, the amount of computation required for this result has grown considerably, I.e. A straightforward formula has been replaced with computing the paths of thousands of photons.
+
+OLD ABSTRACT
+
 Accurate simulation of wireless radio signals is a challenging problem.
 While primary effects can be easily calculated, second order effects are
 numerous and will often substantially alter the range of the radios.
@@ -151,7 +158,11 @@ Write the paper.
 %----------------------------------------------------------------------
 % SECTION I: Introduction
 %----------------------------------------------------------------------
+\section{Introduction}
 
+Wireless radio communication has become ubiquitous and, in fact, necessary for many purposes ranging from widespread wifi hotspots for web browsing to critical military applications.  Whether or not one node is capable of hearing another is clearly an essential question, the answer to which will determine the effective ability to communicate.
+An oracle for deciding whether or not node A can hear node B would be useful in this situation.  Unfortunately, such an oracle does not exist and we must fall back on approximating an answer.  One such method adopted by ns-2 and ns-3 is the Friis[Cite.] equation.  The Friis equation assumes idealized conditions and that no other objects interfere with communications.  Clearly this is an over-simplification; many materials impact radio wave transmission in some way.
+In this work we propose an improved method of approximating radio transmissions.  By modeling the radio communications as photons, determining the signal strength is simply a matter of gathering photons which impact a region of interest.  Photon mapping algorithm was developed by Jensen[Cite.] to improve upon deficiencies in classic ray tracing approaches.  
 % do the bibliography:
 \bibliographystyle{IEEEbib}
 \bibliography{my-bibliography-file}
