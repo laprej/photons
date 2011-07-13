@@ -5,11 +5,31 @@
 // =========================================================================
 // =========================================================================
 
+template<int> Vertex* get(const Face *f) {
+	exit(-1);
+}
+
+template<> Vertex* get<0>(const Face *f) {
+	return f->getEdge()->getStartVertex();
+}
+
+template<> Vertex* get<1>(const Face *f) {
+	return f->getEdge()->getNext()->getStartVertex();
+}
+
+template<> Vertex* get<2>(const Face *f) {
+	return f->getEdge()->getNext()->getNext()->getStartVertex();
+}
+
+template<> Vertex* get<3>(const Face *f) {
+	return f->getEdge()->getNext()->getNext()->getNext()->getStartVertex();
+}
+
 double Face::getArea() const {
-  Vec3f a = (*this)[0]->get();
-  Vec3f b = (*this)[1]->get();
-  Vec3f c = (*this)[2]->get();
-  Vec3f d = (*this)[3]->get();
+	Vec3f a = get<0>(this)->get();//(*this)[0]->get();
+	Vec3f b = get<1>(this)->get();//(*this)[1]->get();
+	Vec3f c = get<2>(this)->get();//(*this)[2]->get();
+	Vec3f d = get<3>(this)->get();//(*this)[3]->get();
   return 
     AreaOfTriangle(DistanceBetweenTwoPoints(a,b),
                    DistanceBetweenTwoPoints(a,c),
@@ -22,10 +42,10 @@ double Face::getArea() const {
 // =========================================================================
 
 Vec3f Face::RandomPoint() const {
-  Vec3f a = (*this)[0]->get();
-  Vec3f b = (*this)[1]->get();
-  Vec3f c = (*this)[2]->get();
-  Vec3f d = (*this)[3]->get();
+	Vec3f a = get<0>(this)->get();//(*this)[0]->get();
+	Vec3f b = get<1>(this)->get();//(*this)[1]->get();
+	Vec3f c = get<2>(this)->get();//(*this)[2]->get();
+	Vec3f d = get<3>(this)->get();//(*this)[3]->get();
 
   double s = GLOBAL_mtrand.rand(); // random real in [0,1]
   double t = GLOBAL_mtrand.rand(); // random real in [0,1]
@@ -39,10 +59,10 @@ Vec3f Face::RandomPoint() const {
 
 bool Face::intersect(const Ray &r, Hit &h, bool intersect_backfacing) const {
   // intersect with each of the subtriangles
-  Vertex *a = (*this)[0];
-  Vertex *b = (*this)[1];
-  Vertex *c = (*this)[2];
-  Vertex *d = (*this)[3];
+	Vertex *a = get<0>(this);//(*this)[0];
+	Vertex *b = get<1>(this);//(*this)[1];
+	Vertex *c = get<2>(this);//(*this)[2];
+	Vertex *d = get<3>(this);//(*this)[3];
   return triangle_intersect(r,h,a,b,c,intersect_backfacing) || triangle_intersect(r,h,a,c,d,intersect_backfacing);
 }
 
@@ -139,10 +159,12 @@ inline Vec3f ComputeNormal(const Vec3f &p1, const Vec3f &p2, const Vec3f &p3) {
 
 Vec3f Face::computeNormal() const {
   // note: this face might be non-planar, so average the two triangle normals
-  Vec3f a = (*this)[0]->get();
-  Vec3f b = (*this)[1]->get();
-  Vec3f c = (*this)[2]->get();
-  Vec3f d = (*this)[3]->get();
+	Vec3f a = get<0>(this)->get();//(*this)[0]->get();
+	Vec3f b = get<1>(this)->get();//(*this)[1]->get();
+	Vec3f c = get<2>(this)->get();//(*this)[2]->get();
+	Vec3f d = get<3>(this)->get();//(*this)[3]->get();
   return 0.5 * (ComputeNormal(a,b,c) + ComputeNormal(a,c,d));
 }
+
+
 
