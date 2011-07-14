@@ -21,7 +21,11 @@ class KDTree {
     bbox = _bbox;
     depth = _depth;
     child1=NULL;
-    child2=NULL;      
+    child2=NULL;   
+
+      pthread_mutexattr_init(&attr);
+      pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+      pthread_mutex_init(&locker, &attr);
   }
   ~KDTree();
 
@@ -61,6 +65,8 @@ class KDTree {
   double split_value;
   std::vector<Photon> photons;
   int depth;
+    pthread_mutex_t locker;
+    pthread_mutexattr_t attr;
 };
 
 #endif

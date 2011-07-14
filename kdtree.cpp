@@ -1,5 +1,7 @@
 #include "kdtree.h"
 
+#include <pthread.h>
+
 #define MAX_PHOTONS_BEFORE_SPLIT 100
 #define MAX_DEPTH 18
 
@@ -51,6 +53,9 @@ bool KDTree::overlaps(const BoundingBox &bb) const {
 
 // ==================================================================
 void KDTree::AddPhoton(const Photon &p) {
+    
+    pthread_mutex_lock(&locker);
+
   const Vec3f &position = p.getPosition();
   assert (PhotonInCell(p));
   if (isLeaf()) {
@@ -80,6 +85,8 @@ void KDTree::AddPhoton(const Photon &p) {
 	child2->AddPhoton(p);
     }
   }
+    
+    pthread_mutex_unlock(&locker);
 }
 
 
@@ -112,6 +119,9 @@ void KDTree::CollectPhotonsInBox(const BoundingBox &bb, std::vector<Photon> &pho
 
 // ==================================================================
 void KDTree::SplitCell() {
+    
+    pthread_mutex_lock(&locker);
+    
   const Vec3f& min = bbox.getMin();
   const Vec3f& max = bbox.getMax();
   double dx = max.x()-min.x();
@@ -153,6 +163,9 @@ void KDTree::SplitCell() {
     const Photon &p = tmp[i];
     this->AddPhoton(p);
   }
+    
+    pthread_mutex_unlock(&locker);
+
 }
 
 // ==================================================================
