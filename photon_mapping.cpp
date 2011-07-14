@@ -87,10 +87,10 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         if (diffuse != zero) {
             //std::cout << "This material diffuse\n";
             // Diffuse
-            Vec3f normal = h.getNormal();
-            Vec3f V = r.getDirection();
-            Vec3f R_dir = RandomDiffuseDirection(normal);
-            R_dir.Normalize();
+            //Vec3f normal = h.getNormal();
+            //Vec3f V = r.getDirection();
+            Vec3f R_dir = RandomDiffuseDirection(h.getNormal());
+            //R_dir.Normalize(); RandomDiffuseDirection normalizes b4 return
             Ray R(pos, R_dir);
             TracePhoton(pos, R_dir, diffuse, iter+1);
             if (iter != 0) {
@@ -101,9 +101,9 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         if (reflective != zero) {
             //std::cout << "This material is reflective\n";
             // Reflection
-            Vec3f normal = h.getNormal();
-            Vec3f V = r.getDirection();
-            Vec3f R_dir = MirrorDirection(normal, V);
+            //Vec3f normal = h.getNormal();
+            //Vec3f V = r.getDirection();
+            Vec3f R_dir = MirrorDirection(h.getNormal(), r.getDirection());
             R_dir.Normalize();
             Ray R(pos, R_dir);
             TracePhoton(pos, R_dir, reflective, iter+1);
@@ -115,12 +115,13 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
         if (transmissive != zero) {
             Vec3f pos2 = r.pointAtParameter(h.getT2() + EPSILON);
             
-            Vec3f normal = h.getNormal();
-            Vec3f V = r.getDirection();
-            Vec3f R_dir = V;
-            R_dir.Normalize();
-            Ray R(pos2, R_dir);
-            TracePhoton(pos2, R_dir, transmissive, iter+1);
+            //Vec3f normal = h.getNormal();
+            //Vec3f V = r.getDirection();
+            //Vec3f R_dir = r.getDirection();
+            //std::cout << "R_dir.Length() is " << R_dir.Length() << "\n";
+            //R_dir.Normalize();
+            Ray R(pos2, r.getDirection());
+            TracePhoton(pos2, r.getDirection(), transmissive, iter+1);
             if (iter != 0) {
                 Photon p(pos, direction, transmissive, iter);
                 kdtree->AddPhoton(p);
