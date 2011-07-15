@@ -329,10 +329,12 @@ void PhotonMapping::RenderEnergy()
             double r = s->getRadius();
             Vec3f v = s->getCenter();
             double intensity = s->getIntensity();
+			glPushMatrix();
             glColor3f(1.0-intensity, intensity, 0.0);
             glTranslated(v.x(), v.y(), v.z());
             GLUquadricObj *quad = gluNewQuadric();
             gluSphere(quad, r, 30, 30);
+			glPopMatrix();
         }
     }
 }
