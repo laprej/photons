@@ -165,7 +165,7 @@ wireless networking, 802.11, simulation, photon mapping, ray tracing
 \section{Introduction}
 
 Wireless radio communication has become ubiquitous and, in fact, necessary for 
-many purposes ranging from widespread wifi hotspots for web browsing to 
+many purposes ranging from widespread wifi hot-spots for web browsing to 
 critical military applications.  Whether or not one node is capable of 
 hearing another is an essential question, the answer to which will 
 determine the effective ability to communicate.
@@ -203,6 +203,16 @@ guys who do the beam stuff)
 \end{enumerate}
 
 \section{Overview}
+Our approach begins by emitting photons from our radio transmitter in a
+directional manner.  The output of this transmitter is 250 mW.  We chose this
+value in our aim to mimic something along the lines of a typical Wifi base
+station such as a Linksys wireless router.  The amount of power in each photon
+is based on the number of photons emitted from this antenna;
+$\frac{250mW}{\#\;photons}$ is our power per photon.  For our purposes, this
+value will be MARK I NEED YOUR NUMBERS.
+
+
+
 \begin{enumerate}
 \item Replace gather step with object-based photon collection
 
@@ -234,6 +244,40 @@ guys who do the beam stuff)
 
 \item NS3 assumes unity-gain antenna.  We shall do the same.
 \end{enumerate}
+
+\section{Optimizations}
+The bulk of our time is spent in the photon emission stage.  Each photon is
+independent from all others which allows for simultaneous tracing of all
+paths.  While parallel computation was not originally within the scope of this
+assignment, we felt our time would be better spent parallelizing a small amount
+of code than waiting many times longer for results.
+
+OpenMP \cite{Kumar:2002:IPC:600009} was designed for code bases just like ours: 
+pre-written and
+tested code requiring performance improvements beyond a single core, ideally
+needing few modifications to the existing code base.  OpenMP worked well for
+us with very few code changes: less than 10 lines of code were changed and
+our tracing step went from ~100\% of one core to ~100\% of all four cores on
+our iMac, substantially decreasing the runtime of this step.
+
+Beyond OpenMP, few other changes were required.  Most of these were correcting
+race conditions in the non-threaded kd-tree.  There are two locations in the
+kd-tree where photons are added.  Wrapping these locations in recursive
+mutexes solved this particular race condition.  While stating that the kd-tree
+is now thread-safe may be premature, the crash has not been seen since this
+modification to the kd-trees were made.
+
+\section{Future Work}
+
+CHANGE BEGINNING HERE
+
+A natural improvement on optimizing the photon emission would be adding
+GPU support.  This task was originally in our proposal but was cut at some
+point as it was overly ambitious.  However, our code was written with
+parallel computation in mind and therefore should not be too difficult to
+add as an enhancement.  From a funding perspective we should clearly target
+GPUs as early as possible as the Department of Defense, more specifically the
+Army, have thousands of GPUs that are largely idle.
 
 % do the bibliography:
 \bibliographystyle{IEEEbib}
