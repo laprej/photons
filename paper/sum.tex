@@ -206,12 +206,19 @@ guys who do the beam stuff)
 Our approach begins by emitting photons from our radio transmitter in a
 directional manner.  The output of this transmitter is 250 mW.  We chose this
 value in our aim to mimic something along the lines of a typical Wifi base
-station such as a Linksys wireless router.  The amount of power in each photon
-is based on the number of photons emitted from this antenna;
+station such as a Linksys wireless router. 
+
+The central frequency of Channel 6 of a 802.11b\/g router is 2.437 GHz. This frequency
+will be used in all test cases for convenience as it is the center channel of 802.11 and
+is a popular default for most routers as it is one of the three non-overlapping channels. 
+The power of a photon can be determined with the following formula: $E = h\nu$
+
+
+
+The amount of power in each photon is based on the number of photons emitted from the base stations
+antenna
 $\frac{250mW}{\#\;photons}$ is our power per photon.  For our purposes, this
-value will be MARK I NEED YOUR NUMBERS.
-
-
+value will be
 
 \begin{enumerate}
 \item Replace gather step with object-based photon collection
