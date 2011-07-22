@@ -170,6 +170,11 @@ critical military applications.  Whether or not one node is capable of
 hearing another is an essential question, the answer to which will 
 determine the effective ability to communicate.
 
+Efficiency is critical when establishing a communication mesh between the
+nodes. Implementing this decision problem
+in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
+network this would need to be performed before every transmission.
+
 An oracle for deciding whether or not node A can hear node B would be useful 
 in this situation.  Unfortunately, such an oracle does not exist and we must 
 fall back on approximating an answer.  One such method adopted by ns-2 and 
@@ -219,6 +224,17 @@ The amount of power in each photon is based on the number of photons emitted fro
 antenna
 $\frac{250mW}{\#\;photons}$ is our power per photon.  For our purposes, this
 value will be
+
+When a photon collides with an object of interest, e.g. a bounding sphere, we
+record that photon's energy.  After all photons have been emitted, each 
+receiving object $i$ has $x_i$ photons which impacted it.  For each $i$, we
+can sum the energy of all $x_i$ to find the total estimated energy received.
+At this point we can make a determination as to whether or not enough energy
+was received to consider this a strong signal.
+
+The above process can be calculated simultaneously as the first step, photon
+emission.  It also replaces the need for a second step, namely photon
+gathering which is not as easily parallelized.  
 
 \begin{enumerate}
 \item Replace gather step with object-based photon collection
