@@ -22,7 +22,6 @@ sub parse_obj_line {
 while(<OBJ>) {
   if(/^v/) {
     print "$i: ";
-    parse_obj_line($_);
     $i++;
   }
 }
