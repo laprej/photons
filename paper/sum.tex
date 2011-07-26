@@ -229,11 +229,17 @@ record that photon's energy.  After all photons have been emitted, each
 receiving object $i$ has $x_i$ photons which impacted it.  For each $i$, we
 can sum the energy of all $x_i$ to find the total estimated energy received.
 At this point we can make a determination as to whether or not enough energy
-was received to consider this a strong signal.
+was received to consider this a strong signal.  Minimal code modifications
+were required to track photon-object collisions.
 
 The above process can be calculated simultaneously as the first step, photon
 emission.  It also replaces the need for a second step, namely photon
-gathering which is not as easily parallelized.  
+gathering, which is not as easily parallelized.  The reason the second step can
+be bypassed is that our aim is not to display the image resulting from the
+photons but rather to answer the question, "Can these objects (primitives) hear
+my radio signal?"  This is a far simpler question to answer as the photons of
+interest have already been sorted into various buckets, i.e. those contained
+within each object.
 
 \begin{enumerate}
 
@@ -243,8 +249,6 @@ gathering which is not as easily parallelized.
 
 \item Material stuff
 
-\item ROSS integration
-
 \item Test Cases:
 -Light (shape, orientation)\newline
 -Multiple Sources? Pointing tx in different directions or use spheres?
@@ -252,8 +256,6 @@ gathering which is not as easily parallelized.
 \item Source estimates
 
 \item Rx requirements (-100dBm-100pW)
-
-\item OO code mods to objects to determine rx
 
 \item How .obj files were modified
 
@@ -263,7 +265,7 @@ gathering which is not as easily parallelized.
 
 \item Refraction \& diffraction
 
-\item Triangles into quads
+\end{enumerate}
 
 \subsection{Additional Work}
 While not strictly required by this project, we did run into a small problem:
@@ -272,10 +274,11 @@ triangles.  After several failed attempts at using modeling software
 (Rhinocerous, Blender, etc.), we decided to simply write our own tool for the
 job.  Using the first few steps of Catmull-Clark \cite{Catmull1978350}, we
 derived three quads from every triangle, a reasonable tradeoff.  Soon after we
-were happily running our code on the Amos Eaton model but emitting .obj
+were happily running our code on the Amos Eaton model but emitting valid .obj
 files can be a little tricky!
 
-\end{enumerate}
+\section{Experimental Results}
+MARK THIS SECTION IS YOURS
 
 \section{Optimizations}
 The bulk of our time is spent in the photon emission stage.  Each photon is
@@ -301,6 +304,17 @@ modification to the kd-trees were made.
 \section{Future Work}
 
 CHANGE BEGINNING HERE
+Our first task will be integration with the ROSS \cite{ross} framework, a high
+performance parallel optimistic simulator.  ROSS has been used in the past to
+primarily simulate large wired networks.  However, recently a need for
+well-performing wireless simulations has arisen.  It was within this context
+that the idea for this very paper was conceived.  We expect integration with
+ROSS to be non-trivial, although a simple first approach would be to run our
+photon mapper at each Global Virtual Time (GVT)\footnote{GVT is a coordinated
+"pause" in processing to determine the lowest unprocessed timestamp of any
+event in the system.  Any events "older" than GVT can be reclaimed.} interval.
+During GVT, progress is effectively stopped and each processor knows the
+locations of all radios at a given time.
 
 A natural improvement on optimizing the photon emission would be adding
 GPU support.  This task was originally in our proposal but was cut at some
@@ -315,7 +329,7 @@ Russian Roulette \cite{Russian}[and Jensen].  For each bounce in our
 system we may create up to three additional photons.  So, for example, our
 initial emission of 500 photons (a relatively small amount), each of which may
 bounce up to 5 times (a constant in our simulator), may yield up
-to $500 \times 3^5 = 121500$ photons.  Russian Roulette deviates from this
+to $500 \times 3^5 = 121,500$ photons.  Russian Roulette deviates from this
 approach; instead the material properties are used to determine whether the
 photon is diffusely scattered, reflected, transmitted, or dropped as a whole.
 In other words, the energies of the photons are not scaled down according to
