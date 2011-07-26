@@ -104,7 +104,6 @@
 % do the abstract
 \begin{abstract}
 %\section{Abstract}
-NEW ABSTRACT
 Accurate simulation of wireless radio signals is a challenging problem.  While
 primary effects can easily be calculated, second order effects are numerous
 and will often substantially alter the range of the radios.  Many modern
@@ -125,31 +124,31 @@ of radio transmissions is increased, the amount of computation required for
 this result has grown considerably, i.e. A straightforward formula has been
 replaced with computing the paths of thousands of photons.
 
-OLD ABSTRACT
+%% OLD ABSTRACT
 
-Accurate simulation of wireless radio signals is a challenging problem.
-While primary effects can be easily calculated, second order effects are
-numerous and will often substantially alter the range of the radios.
+%% Accurate simulation of wireless radio signals is a challenging problem.
+%% While primary effects can be easily calculated, second order effects are
+%% numerous and will often substantially alter the range of the radios.
 
 
-Simulating wireless networks poses computational problems beyond their wired
-counterparts.  Determining which nodes are within transmission range of a given
-node's radio when sending is non-trivial.  Implementing this decision problem
-in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
-network this would need to be performed before every transmission.
+%% Simulating wireless networks poses computational problems beyond their wired
+%% counterparts.  Determining which nodes are within transmission range of a given
+%% node's radio when sending is non-trivial.  Implementing this decision problem
+%% in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
+%% network this would need to be performed before every transmission.
 
-Visible light and radio waves are essentially the same phenomenon;
-we hope to use the abilities of modern GPUs to perform many computations
-simultaneously to speed up this problem.  McGuire and Luebke
-\cite{mcguire09imagespace} demonstrated real-time photon mapping
-of complicated scenes utilizing GPU acceleration.  Schmitz et al.
-\cite{Schmitz:2006:ERW:1164717.1164730}
-\cite{Schmitz:2006:WPU:1163610.1163638}
-improved the accuracy of their ns-2 model via photon mapping.  
-Simulators such as ROSS \cite{ross} utilize the Transmission Line Matrix
-\cite{Nutaro:2006:DEM:1138464.1138468} to determine which nodes are able
-to receive transmissions.  We hope to improve upon both the accuracy and 
-run-time of TLM in this work.
+%% Visible light and radio waves are essentially the same phenomenon;
+%% we hope to use the abilities of modern GPUs to perform many computations
+%% simultaneously to speed up this problem.  McGuire and Luebke
+%% \cite{mcguire09imagespace} demonstrated real-time photon mapping
+%% of complicated scenes utilizing GPU acceleration.  Schmitz et al.
+%% \cite{Schmitz:2006:ERW:1164717.1164730}
+%% \cite{Schmitz:2006:WPU:1163610.1163638}
+%% improved the accuracy of their ns-2 model via photon mapping.  
+%% Simulators such as ROSS \cite{ross} utilize the Transmission Line Matrix
+%% \cite{Nutaro:2006:DEM:1138464.1138468} to determine which nodes are able
+%% to receive transmissions.  We hope to improve upon both the accuracy and 
+%% run-time of TLM in this work.
 
 \end{abstract}
 \vspace{5mm}
@@ -175,7 +174,7 @@ nodes. Implementing this decision problem
 in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
 network this would need to be performed before every transmission.
 
-An oracle for deciding whether or not node A can hear node B would be useful 
+An oracle for deciding whether or not node $x$ can hear node $y$ would be useful 
 in this situation.  Unfortunately, such an oracle does not exist and we must 
 fall back on approximating an answer.  One such method adopted by ns-2 and 
 ns-3 is the Friis[Cite.] equation.  The Friis equation assumes idealized 
@@ -237,7 +236,6 @@ emission.  It also replaces the need for a second step, namely photon
 gathering which is not as easily parallelized.  
 
 \begin{enumerate}
-\item Replace gather step with object-based photon collection
 
 \item No roof
 
@@ -259,10 +257,6 @@ gathering which is not as easily parallelized.
 
 \item How .obj files were modified
 
-\item OpenMP scalability (possible GPU tie-in)
-
-\item Thread-protecting KD-trees
-
 \item Where do we see substantial improvement over Friis?
 
 \item NS3 assumes unity-gain antenna.  We shall do the same.
@@ -270,6 +264,17 @@ gathering which is not as easily parallelized.
 \item Refraction \& diffraction
 
 \item Triangles into quads
+
+\subsection{Additional Work}
+While not strictly required by this project, we did run into a small problem:
+our entire code-base was built upon quads while our model of Amos Eaton was
+triangles.  After several failed attempts at using modeling software
+(Rhinocerous, Blender, etc.), we decided to simply write our own tool for the
+job.  Using the first few steps of Catmull-Clark \cite{Catmull1978350}, we
+derived three quads from every triangle, a reasonable tradeoff.  Soon after we
+were happily running our code on the Amos Eaton model but emitting .obj
+files can be a little tricky!
+
 \end{enumerate}
 
 \section{Optimizations}
