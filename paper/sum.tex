@@ -266,6 +266,10 @@ gathering which is not as easily parallelized.
 \item Where do we see substantial improvement over Friis?
 
 \item NS3 assumes unity-gain antenna.  We shall do the same.
+
+\item Refraction \& diffraction
+
+\item Triangles into quads
 \end{enumerate}
 
 \section{Optimizations}
@@ -301,6 +305,18 @@ add as an enhancement.  From a funding perspective we should clearly target
 GPUs as early as possible as the Department of Defense, more specifically the
 Army, have thousands of GPUs that are largely idle.
 
+An additional performance improvement is likely through the use of
+Russian Roulette \cite{Russian}[and Jensen].  For each bounce in our
+system we may create up to three additional photons.  So, for example, our
+initial emission of 500 photons (a relatively small amount), each of which may
+bounce up to 5 times (a constant in our simulator), may yield up
+to $500 \times 3^5 = 121500$ photons.  Russian Roulette deviates from this
+approach; instead the material properties are used to determine whether the
+photon is diffusely scattered, reflected, transmitted, or dropped as a whole.
+In other words, the energies of the photons are not scaled down according to
+the material.  The result will still be correct; as McGuire states,
+``one photon carrying energy 100X is just as powerful as one hundred photons
+with energy X each.''  
 % do the bibliography:
 \bibliographystyle{IEEEbib}
 \bibliography{my-bibliography-file}
