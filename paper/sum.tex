@@ -89,7 +89,7 @@
 %      Department of Electrical Engineering...}
 %  }
 
-% specifiy the journal name
+% specify the journal name
 \journal{Advanced Computer Graphics, Spring 2011}
 
 % Or, when the paper is a preprint, try this...
@@ -196,16 +196,16 @@ to improve upon deficiencies in classic ray tracing approaches.  It is a
 realistic two-pass global illumination algorithm which consists of shooting
 photons into the scene and then performing a local collection step.
 
-\section{Related Work}
+%% \section{Related Work}
 
-\begin{enumerate}
-\item photon mapping
+%% \begin{enumerate}
+%% \item photon mapping
 
-\item radio transmission
+%% \item radio transmission
 
-\item radio transmission using photon mapping (like from other papers, e.g. the
-guys who do the beam stuff)
-\end{enumerate}
+%% \item radio transmission using photon mapping (like from other papers, e.g. the
+%% guys who do the beam stuff)
+%% \end{enumerate}
 
 \section{Overview}
 Our approach begins by emitting photons from our radio transmitter in a
@@ -225,6 +225,8 @@ antenna
 $\frac{250mW}{\#\;photons}$ is our power per photon.  For our purposes, this
 value will be
 
+Rx requirements (-100dBm-100pW)
+
 When a photon collides with an object of interest, e.g. a bounding sphere, we
 record that photon's energy.  After all photons have been emitted, each 
 receiving object $i$ has $x_i$ photons which impacted it.  For each $i$, we
@@ -242,35 +244,11 @@ my radio signal?"  This is a far simpler question to answer as the photons of
 interest have already been sorted into various buckets, i.e. those contained
 within each object.
 
-\begin{enumerate}
-
-\item No roof
-
-\item antenna electrodynamics
-
-\item Material stuff
-
-\item Test Cases:
--Light (shape, orientation)\newline
--Multiple Sources? Pointing tx in different directions or use spheres?
-
-\item Source estimates
-
-\item Rx requirements (-100dBm-100pW)
-
-\item Where do we see substantial improvement over Friis?
-
-\item NS3 assumes unity-gain antenna.  We shall do the same.
-
-\item Refraction \& diffraction
-
-\end{enumerate}
-
 \subsection{Additional Work}
 While not strictly required by this project, we did run into a small problem:
 our entire code-base was built upon quads while our model of Amos Eaton was
 triangles.  After several failed attempts at using modeling software
-(Rhinocerous, Blender, etc.), we decided to simply write our own tool for the
+(Rhinoceros, Blender, etc.), we decided to simply write our own tool for the
 job.  Using the first few steps of Catmull-Clark \cite{Catmull1978350}, we
 derived three quads from every triangle, a reasonable tradeoff.  Soon after we
 were happily running our code on the Amos Eaton model but emitting valid .obj
@@ -283,8 +261,26 @@ material in addition to the emissive and reflective properties.  Adding this
 without breaking existing .obj files (without the transmissive property
 specified) was our goal and we were successful.
 
-\section{Experimental Results}
+\section{Experiment \& Results}
 MARK THIS SECTION IS YOURS
+
+\begin{enumerate}
+
+\item antenna electrodynamics
+
+\item Material stuff
+
+\item Test Cases:
+-Light (shape, orientation)\newline
+-Multiple Sources? Pointing tx in different directions or use spheres?
+
+\item Source estimates
+
+\item Where do we see substantial improvement over Friis?
+
+\item NS3 assumes unity-gain antenna.  We shall do the same.
+
+\end{enumerate}
 
 It is worth mentioning that our Amos Eaton .obj model did not have a roof on it.
 We therefore expected photons to leak out of the model and, in fact, they do.
@@ -317,7 +313,10 @@ modification to the kd-trees were made.
 
 \section{Future Work}
 
+Refraction \& diffraction
+
 CHANGE BEGINNING HERE
+
 Our first task will be integration with the ROSS \cite{ross} framework, a high
 performance parallel optimistic simulator.  ROSS has been used in the past to
 primarily simulate large wired networks.  However, recently a need for
