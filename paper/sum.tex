@@ -89,7 +89,7 @@
 %      Department of Electrical Engineering...}
 %  }
 
-% specifiy the journal name
+% specify the journal name
 \journal{Advanced Computer Graphics, Spring 2011}
 
 % Or, when the paper is a preprint, try this...
@@ -104,36 +104,52 @@
 % do the abstract
 \begin{abstract}
 %\section{Abstract}
-NEW ABSTRACT
-Accurate simulation of wireless radio signals is a challenging problem.  While primary effects can easily be calculated, second order effects are numerous and will often substantially alter the range of the radios.  Many modern simulators such as ns-3 use a simple, overly conservative calculation known as the Friis[Citation needed.] equation.
-This work demonstrates a more accurate estimate of radio waves via photon mapping[Cite.].  By utilizing photon mapping we can predict where photons will travel as well as the objects they will strike.  By collecting the number of photons to strike an object (e.g. an antenna) the effective signal strength can be determined.  If the signal strength is above a pre-specified cutoff then the receiving node can hear the transmitter.
-We show that this approach generates a higher fidelity estimate in most scenarios.  As expected, buildings and obstacles impact radio transmissions in ways that cannot be modeled by the Friis equation.  While the resolution of radio transmissions is increased, the amount of computation required for this result has grown considerably, I.e. A straightforward formula has been replaced with computing the paths of thousands of photons.
+Accurate simulation of wireless radio signals is a challenging problem.  While
+primary effects can easily be calculated, second order effects are numerous
+and will often substantially alter the range of the radios.  Many modern
+simulators such as ns-3 use a simple, overly conservative calculation known
+as the Friis[Citation needed.] equation.
 
-OLD ABSTRACT
+This work demonstrates a more accurate estimate of radio waves via photon
+mapping\cite{Jensen96globalillumination}.  By utilizing photon mapping we can
+predict where photons
+will travel as well as the objects they will strike.  By collecting the number
+of photons to strike an object (e.g. an antenna) the effective signal strength
+can be determined.  If the signal strength is above a pre-specified cutoff
+then the receiving node can hear the transmitter.
 
-Accurate simulation of wireless radio signals is a challenging problem.
-While primary effects can be easily calculated, second order effects are
-numerous and will often substantially alter the range of the radios.
+We show that this approach generates a higher fidelity estimate in most
+scenarios.  As expected, buildings and obstacles impact radio transmissions
+in ways that cannot be modeled by the Friis equation.  While the resolution
+of radio transmissions is increased, the amount of computation required for
+this result has grown considerably, i.e. A straightforward formula has been
+replaced with computing the paths of thousands of photons.
+
+%% OLD ABSTRACT
+
+%% Accurate simulation of wireless radio signals is a challenging problem.
+%% While primary effects can be easily calculated, second order effects are
+%% numerous and will often substantially alter the range of the radios.
 
 
-Simulating wireless networks poses computational problems beyond their wired
-counterparts.  Determining which nodes are within transmission range of a given
-node's radio when sending is non-trivial.  Implementing this decision problem
-in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
-network this would need to be performed before every transmission.
+%% Simulating wireless networks poses computational problems beyond their wired
+%% counterparts.  Determining which nodes are within transmission range of a given
+%% node's radio when sending is non-trivial.  Implementing this decision problem
+%% in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
+%% network this would need to be performed before every transmission.
 
-Visible light and radio waves are essentially the same phenomenon;
-we hope to use the abilities of modern GPUs to perform many computations
-simultaneously to speed up this problem.  McGuire and Luebke
-\cite{mcguire09imagespace} demonstrated real-time photon mapping
-of complicated scenes utilizing GPU acceleration.  Schmitz et al.
-\cite{Schmitz:2006:ERW:1164717.1164730}
-\cite{Schmitz:2006:WPU:1163610.1163638}
-improved the accuracy of their ns-2 model via photon mapping.  
-Simulators such as ROSS \cite{ross} utilize the Transmission Line Matrix
-\cite{Nutaro:2006:DEM:1138464.1138468} to determine which nodes are able
-to receive transmissions.  We hope to improve upon both the accuracy and 
-run-time of TLM in this work.
+%% Visible light and radio waves are essentially the same phenomenon;
+%% we hope to use the abilities of modern GPUs to perform many computations
+%% simultaneously to speed up this problem.  McGuire and Luebke
+%% \cite{mcguire09imagespace} demonstrated real-time photon mapping
+%% of complicated scenes utilizing GPU acceleration.  Schmitz et al.
+%% \cite{Schmitz:2006:ERW:1164717.1164730}
+%% \cite{Schmitz:2006:WPU:1163610.1163638}
+%% improved the accuracy of their ns-2 model via photon mapping.  
+%% Simulators such as ROSS \cite{ross} utilize the Transmission Line Matrix
+%% \cite{Nutaro:2006:DEM:1138464.1138468} to determine which nodes are able
+%% to receive transmissions.  We hope to improve upon both the accuracy and 
+%% run-time of TLM in this work.
 
 \end{abstract}
 \vspace{5mm}
@@ -142,27 +158,202 @@ run-time of TLM in this work.
 wireless networking, 802.11, simulation, photon mapping, ray tracing
 \end{keywords}
 
-\section{Schedule}
-\subsection*{Week 1}
-Background reading and research.  Learn CUDA / GLSL / OpenCL.
-
-\subsection*{Week 2}
-Most of the implementation should be done in this week.
-
-\subsection*{Week 3}
-More implementation, debugging, and code clean-up.
-
-\subsection*{Week 4}
-Write the paper.
 % start the main text ...
 %----------------------------------------------------------------------
 % SECTION I: Introduction
 %----------------------------------------------------------------------
 \section{Introduction}
 
-Wireless radio communication has become ubiquitous and, in fact, necessary for many purposes ranging from widespread wifi hotspots for web browsing to critical military applications.  Whether or not one node is capable of hearing another is clearly an essential question, the answer to which will determine the effective ability to communicate.
-An oracle for deciding whether or not node A can hear node B would be useful in this situation.  Unfortunately, such an oracle does not exist and we must fall back on approximating an answer.  One such method adopted by ns-2 and ns-3 is the Friis[Cite.] equation.  The Friis equation assumes idealized conditions and that no other objects interfere with communications.  Clearly this is an over-simplification; many materials impact radio wave transmission in some way.
-In this work we propose an improved method of approximating radio transmissions.  By modeling the radio communications as photons, determining the signal strength is simply a matter of gathering photons which impact a region of interest.  Photon mapping algorithm was developed by Jensen[Cite.] to improve upon deficiencies in classic ray tracing approaches.  
+Wireless radio communication has become ubiquitous and, in fact, necessary for 
+many purposes ranging from widespread wifi hot-spots for web browsing to 
+critical military applications.  Whether or not one node is capable of 
+hearing another is an essential question, the answer to which will 
+determine the effective ability to communicate.
+
+Efficiency is critical when establishing a communication mesh between the
+nodes. Implementing this decision problem
+in a naive manner will produce an O($n^2$) algorithm.  In a mobile ad-hoc
+network this would need to be performed before every transmission.
+
+An oracle for deciding whether or not node $x$ can hear node $y$ would be useful 
+in this situation.  Unfortunately, such an oracle does not exist and we must 
+fall back on approximating an answer.  One such method adopted by ns-2 and 
+ns-3 is the Friis[Cite.] equation.  The Friis equation assumes idealized 
+conditions and that no other objects interfere with communications.  Clearly 
+this is an over-simplification; many materials impact radio wave transmission 
+in some, oftentimes beneficial, manner.
+
+In this work we propose an improved method of approximating radio 
+transmissions.  By modeling the radio communications as photons, determining 
+the signal strength is simply a matter of gathering photons which impact a 
+region of interest.  A variation of photon mapping is applicable in this
+scenario.  By enclosing radio receivers in bounding spheres, the number of
+photons to impact the sphere and, in turn, the signal strength of the radio
+signals, can be determined.
+
+Photon mapping algorithm was developed by Jensen \cite{Jensen96globalillumination} 
+to improve upon deficiencies in classic ray tracing approaches.  It is a
+realistic two-pass global illumination algorithm which consists of shooting
+photons into the scene and then performing a local collection step.
+
+%% \section{Related Work}
+
+%% \begin{enumerate}
+%% \item photon mapping
+
+%% \item radio transmission
+
+%% \item radio transmission using photon mapping (like from other papers, e.g. the
+%% guys who do the beam stuff)
+%% \end{enumerate}
+
+\section{Overview}
+Our approach begins by emitting photons from our radio transmitter in a
+directional manner.  The output of this transmitter is 250 mW.  We chose this
+value in our aim to mimic something along the lines of a typical Wifi base
+station such as a Linksys wireless router. 
+
+The central frequency of Channel 6 of a 802.11b\/g router is 2.437 GHz. This frequency
+will be used in all test cases for convenience as it is the center channel of 802.11 and
+is a popular default for most routers as it is one of the three non-overlapping channels. 
+The power of a photon can be determined with the following formula: $E = h\nu$
+
+
+
+The amount of power in each photon is based on the number of photons emitted from the base stations
+antenna
+$\frac{250mW}{\#\;photons}$ is our power per photon.  For our purposes, this
+value will be
+
+Rx requirements (-100dBm-100pW)
+
+When a photon collides with an object of interest, e.g. a bounding sphere, we
+record that photon's energy.  After all photons have been emitted, each 
+receiving object $i$ has $x_i$ photons which impacted it.  For each $i$, we
+can sum the energy of all $x_i$ to find the total estimated energy received.
+At this point we can make a determination as to whether or not enough energy
+was received to consider this a strong signal.  Minimal code modifications
+were required to track photon-object collisions.
+
+The above process can be calculated simultaneously as the first step, photon
+emission.  It also replaces the need for a second step, namely photon
+gathering, which is not as easily parallelized.  The reason the second step can
+be bypassed is that our aim is not to display the image resulting from the
+photons but rather to answer the question, "Can these objects (primitives) hear
+my radio signal?"  This is a far simpler question to answer as the photons of
+interest have already been sorted into various buckets, i.e. those contained
+within each object.
+
+\subsection{Additional Work}
+While not strictly required by this project, we did run into a small problem:
+our entire code-base was built upon quads while our model of Amos Eaton was
+triangles.  After several failed attempts at using modeling software
+(Rhinoceros, Blender, etc.), we decided to simply write our own tool for the
+job.  Using the first few steps of Catmull-Clark \cite{Catmull1978350}, we
+derived three quads from every triangle, a reasonable tradeoff.  Soon after we
+were happily running our code on the Amos Eaton model but emitting valid .obj
+files can be a little tricky!
+
+Additionally, the given .obj file implementation was slightly lacking for our
+needs.  Specifically, when declaring material properties, our photon mapping
+implementation required a coefficient for the transmissive property of the
+material in addition to the emissive and reflective properties.  Adding this
+without breaking existing .obj files (without the transmissive property
+specified) was our goal and we were successful.
+
+\section{Experiment \& Results}
+MARK THIS SECTION IS YOURS
+
+\begin{enumerate}
+
+\item antenna electrodynamics
+
+\item Material stuff
+
+\item Test Cases:
+-Light (shape, orientation)\newline
+-Multiple Sources? Pointing tx in different directions or use spheres?
+
+\item Source estimates
+
+\item Where do we see substantial improvement over Friis?
+
+\item NS3 assumes unity-gain antenna.  We shall do the same.
+
+\end{enumerate}
+
+It is worth mentioning that our Amos Eaton .obj model did not have a roof on it.
+We therefore expected photons to leak out of the model and, in fact, they do.
+This effect was mainly discarded which may or may not have been a wise
+decision, although capping the model was not appropriate for this project as
+that would impact the ability to clearly view the model from a birds-eye view.
+Simply placing a large quad over the entire model would probably suffice to
+correct this.
+
+\section{Optimizations}
+The bulk of our time is spent in the photon emission stage.  Each photon is
+independent from all others which allows for simultaneous tracing of all
+paths.  While parallel computation was not originally within the scope of this
+assignment, we felt our time would be better spent parallelizing a small amount
+of code than waiting many times longer for results.
+
+OpenMP \cite{Grama} was designed for code bases just like ours: pre-written and
+tested code requiring performance improvements beyond a single core, ideally
+needing few modifications to the existing code base.  OpenMP worked well for
+us with very few code changes: less than 10 lines of code were changed and
+our tracing step went from ~100\% of one core to ~100\% of all four cores on
+our iMac, substantially decreasing the runtime of this step.
+
+Beyond OpenMP, few other changes were required.  Most of these were correcting
+race conditions in the non-threaded kd-tree.  There are two locations in the
+kd-tree where photons are added.  Wrapping these locations in recursive
+mutexes solved this particular race condition.  While stating that the kd-tree
+is now thread-safe may be premature, the crash has not been seen since this
+modification to the kd-trees were made.
+
+\section{Future Work}
+
+Refraction \& diffraction
+
+CHANGE BEGINNING HERE
+
+Our first task will be integration with the ROSS \cite{ross} framework, a high
+performance parallel optimistic simulator.  ROSS has been used in the past to
+primarily simulate large wired networks.  However, recently a need for
+well-performing wireless simulations has arisen.  It was within this context
+that the idea for this very paper was conceived.  We expect integration with
+ROSS to be non-trivial, although a simple first approach would be to run our
+photon mapper at each Global Virtual Time (GVT)\footnote{GVT is a coordinated
+"pause" in processing to determine the lowest unprocessed timestamp of any
+event in the system.  Any events "older" than GVT can be reclaimed.} interval.
+During GVT, progress is effectively stopped and each processor knows the
+locations of all radios at a given time.  It is therefore possible for photon
+mapping to take place at a given instant in time with no wireless node movement.
+A table could then be built to determine which nodes are able to hear other
+transmitting nodes.  This table would be consulted until the next GVT interval
+and corresponding photon mapping step.
+
+A natural improvement for optimizing the photon emission would be adding
+GPU support.  This task was originally in our proposal but was cut at some
+point as it was overly ambitious.  However, our code was written with
+parallel computation in mind and therefore should not be too difficult to
+add as an enhancement.  From a funding perspective we should clearly target
+GPUs as early as possible as the Department of Defense, more specifically the
+Army, have thousands of GPUs that are largely idle.
+
+An additional performance improvement is likely through the use of
+Russian Roulette \cite{Jensen96globalillumination}\cite{Russian}.  For each
+bounce in our
+system we may create up to three additional photons.  So, for example, our
+initial emission of 500 photons (a relatively small amount), each of which may
+bounce up to 5 times (a constant in our simulator), may yield up
+to $500 \times 3^5 = 121,500$ photons.  Russian Roulette deviates from this
+approach; instead the material properties are used to determine whether the
+photon is diffusely scattered, reflected, transmitted, or dropped as a whole.
+In other words, the energies of the photons are not scaled down according to
+the material.  The result will still be correct; as McGuire states,
+``one photon carrying energy 100X is just as powerful as one hundred photons
+with energy X each.''\cite{Russian}
 % do the bibliography:
 \bibliographystyle{IEEEbib}
 \bibliography{my-bibliography-file}
