@@ -257,8 +257,6 @@ within each object.
 
 \item Rx requirements (-100dBm-100pW)
 
-\item How .obj files were modified
-
 \item Where do we see substantial improvement over Friis?
 
 \item NS3 assumes unity-gain antenna.  We shall do the same.
@@ -276,6 +274,13 @@ job.  Using the first few steps of Catmull-Clark \cite{Catmull1978350}, we
 derived three quads from every triangle, a reasonable tradeoff.  Soon after we
 were happily running our code on the Amos Eaton model but emitting valid .obj
 files can be a little tricky!
+
+Additionally, the given .obj file implementation was slightly lacking for our
+needs.  Specifically, when declaring material properties, our photon mapping
+implementation required a coefficient for the transmissive property of the
+material in addition to the emissive and reflective properties.  Adding this
+without breaking existing .obj files (without the transmissive property
+specified) was our goal and we were successful.
 
 \section{Experimental Results}
 MARK THIS SECTION IS YOURS
