@@ -108,7 +108,7 @@ Accurate simulation of wireless radio signals is a challenging problem.  While
 primary effects can easily be calculated, second order effects are numerous
 and will often substantially alter the range of the radios.  Many modern
 simulators such as ns-3 use a simple, overly conservative calculation known
-as the Friis[Citation needed.] equation.
+as the Friis \cite{1697062} equation.
 
 This work demonstrates a more accurate estimate of radio waves via photon
 mapping\cite{Jensen96globalillumination}.  By utilizing photon mapping we can
@@ -178,7 +178,8 @@ network this would need to be performed before every transmission.
 An oracle for deciding whether or not node $x$ can hear node $y$ would be useful 
 in this situation.  Unfortunately, such an oracle does not exist and we must 
 fall back on approximating an answer.  One such method adopted by ns-2 and 
-ns-3 is the Friis[Cite.] equation.  The Friis equation assumes idealized 
+ns-3 is the Friis \cite{1697062} equation.  The Friis equation assumes
+idealized 
 conditions and that no other objects interfere with communications.  Clearly 
 this is an over-simplification; many materials impact radio wave transmission 
 in some, oftentimes significant, manner.
