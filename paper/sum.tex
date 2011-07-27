@@ -213,19 +213,25 @@ directional manner.  The output of this transmitter is 250 mW.  We chose this
 value in our aim to mimic something along the lines of a typical Wifi base
 station such as a Linksys wireless router. 
 
-The central frequency of Channel 6 of a 802.11b\/g router is 2.437 GHz. This frequency
+The central frequency of Channel 6 of a 802.11b\\g router is 2.437 GHz. This frequency
 will be used in all test cases for convenience as it is the center channel of 802.11 and
 is a popular default for most routers as it is one of the three non-overlapping channels. 
 The power of a photon can be determined with the following formula: $E = h\nu$
 
+In the case of 2.437 GHz photons, $E \approx 10^{-25} \mathrm{J}$, which would require $\approx 10^{22}$
+photons to simulate a second of RF traffic at 250 mW. Since mapping that number of photons is infeasible, 
+we make an approximation that the power in each photon is based on the number of photons emitted from the base 
+stations antenna for our simulation. $E = \frac{250mW}{\#\;photons}$. This is the same approximation that is
+implicitly made in visible photon mapping.
 
+To properly receive a signal, a mobile station must receive at least -100 dBm of signal. 
+This works out to be 100 femtowatts as shown below.
 
-The amount of power in each photon is based on the number of photons emitted from the base stations
-antenna
-$\frac{250mW}{\#\;photons}$ is our power per photon.  For our purposes, this
-value will be
-
-Rx requirements (-100dBm-100pW)
+\begin{eqnarray}
+	-100 \mathrm{dBm} & = & 10\log\frac{\mathrm{Power}}{1\mathrm{mW}} \\
+	10^{-10} & = & \frac{\mathrm{Power}}{1\mathrm{mW}} \\
+	10^{-13} & = & \mathrm{Power}
+\end{eqnarray}
 
 When a photon collides with an object of interest, e.g. a bounding sphere, we
 record that photon's energy.  After all photons have been emitted, each 
@@ -262,23 +268,37 @@ without breaking existing .obj files (without the transmissive property
 specified) was our goal and we were successful.
 
 \section{Experiment \& Results}
-MARK THIS SECTION IS YOURS
+Our first assumption is a unity gain antenna. If the antenna were to impart
+a large gain or loss, this would need to be factored in as photons were 
+transmitted.
 
 \begin{enumerate}
 
 \item antenna electrodynamics
 
 \item Material stuff
+All equal numbers, no RGB.
 
 \item Test Cases:
--Light (shape, orientation)\newline
--Multiple Sources? Pointing tx in different directions or use spheres?
+-flat light source in two directions
+-poor mans omnidirectional
+-average case 
+
+-Material "study"
+Concrete/Dense Material (low transmissity)
+Aluminum Foil/Highly Reflective
+
+Stations:
+1. Far field
+2. Near field
+3. Medium field
 
 \item Source estimates
 
-\item Where do we see substantial improvement over Friis?
-
-\item NS3 assumes unity-gain antenna.  We shall do the same.
+The Friis equation approach used assumes a vacuum and perfect line of sight.
+This leads to highly inaccurate results in most situations, including long
+distances in air. For example, in the first model, Friis would estimate a power of XXXX
+and we calculate XXXX, which is vastly different. 
 
 \end{enumerate}
 
@@ -313,10 +333,6 @@ modification to the kd-trees were made.
 
 \section{Future Work}
 
-Refraction \& diffraction
-
-CHANGE BEGINNING HERE
-
 Our first task will be integration with the ROSS \cite{ross} framework, a high
 performance parallel optimistic simulator.  ROSS has been used in the past to
 primarily simulate large wired networks.  However, recently a need for
@@ -332,6 +348,13 @@ mapping to take place at a given instant in time with no wireless node movement.
 A table could then be built to determine which nodes are able to hear other
 transmitting nodes.  This table would be consulted until the next GVT interval
 and corresponding photon mapping step.
+
+Our current model assumes that when photons are transmitted through a material,
+they are merely attenuated, and their angle and other properties do not change.
+For maximal realism out model should take into account for both refraction and
+diffraction though when transmitted through materials, as well as near openings and
+corners that approach the size of our modeled photons. In the case of the 2.4 GHz photon,
+which has a wavelength of 12.5 cm, this could be a common effect.
 
 A natural improvement for optimizing the photon emission would be adding
 GPU support.  This task was originally in our proposal but was cut at some
