@@ -32,7 +32,7 @@ LIBS            = -lm -lGL -lGLU -lglut
 else
 ifeq ($(UNAME), Darwin)
 # Mac OS X
-CC		= g++ -g -Wall -pedantic -O0
+CC		= g++ -g -Wall -pedantic -O3 -fopenmp
 LIBS		= -framework GLUT -framework OpenGL
 else
 ifeq ($(findstring CYGWIN,$(UNAME)),CYGWIN)
