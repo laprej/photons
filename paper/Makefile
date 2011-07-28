@@ -9,4 +9,4 @@ sum.pdf: sum.tex my-bibliography-file.bib
 	open sum.pdf
 
 clean:
-	rm -rf *~ *.aux *.dvi *.log
+	rm -rf *~ *.aux *.dvi *.log *.bbl *.blg
