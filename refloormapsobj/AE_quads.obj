@@ -7,7 +7,7 @@ transmitted 0 0 0
 material
 diffuse 0 0 0
 reflective 0 0 0
-emitted 30 30 30
+emitted 1 1 1 
 transmitted 0 0 0
 
 m 0
