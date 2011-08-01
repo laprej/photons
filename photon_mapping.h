@@ -12,7 +12,7 @@ class Ray;
 class Hit;
 class RayTracer;
 class Radiosity;
-
+class Sphere;
 // =========================================================================
 // The basic class to shoot photons within the scene and collect and
 // process the nearest photons for use in the raytracer
@@ -39,7 +39,7 @@ class PhotonMapping {
   void TracePhotons();
   // step 2: collect the photons and return the contribution from indirect illumination
   Vec3f GatherIndirect(const Vec3f &point, const Vec3f &normal, const Vec3f &direction_from) const;
-
+  Vec3f CalculateEnergy(Sphere* s);
   // for visualization
   void RenderPhotons();
   void RenderKDTree();

@@ -321,20 +321,30 @@ void PhotonMapping::RenderKDTree() {
     glEnable(GL_LIGHTING);
 }
 
+Vec3f PhotonMapping::CalculateEnergy(Sphere *s) {
+			const double power = 250e-3; 
+
+			std::vector<Photon> photons = s->getPhotons();
+			std::vector<Photon>::iterator it;
+			Vec3f total_energy;
+			
+			for(it = photons.begin(); it < photons.end(); it++) {
+				Vec3f e = it->getEnergy();
+				total_energy += e;
+			}
+			double power_per_photon = power / args->num_photons_to_shoot;
+			total_energy *= power_per_photon;
+			return total_energy;
+}
+
 void PhotonMapping::RenderEnergy()
 {
     for (int i = 0; i < mesh->numPrimitives(); ++i) {
         Primitive *p = mesh->getPrimitive(i);
         if (Sphere *s = dynamic_cast<Sphere*> (p)) {
-            double r = s->getRadius();
-            Vec3f v = s->getCenter();
-            double intensity = s->getIntensity();
-			glPushMatrix();
-            glColor3f(1.0-intensity, intensity, 0.0);
-            glTranslated(v.x(), v.y(), v.z());
-            GLUquadricObj *quad = gluNewQuadric();
-            gluSphere(quad, r, 30, 30);
-			glPopMatrix();
+			double r = s->getRadius();
+            Vec3f  v = s->getCenter();
+			std::cout << CalculateEnergy(s);
         }
     }
 }
