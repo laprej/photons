@@ -9,6 +9,7 @@ and downloading the code as you see fit.
 Running the Code
 ----------------
 To build the code, simply type:
+
     make
 
 This should build the code.  Assuming no errors, it can be run like so:
