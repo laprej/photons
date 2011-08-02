@@ -341,15 +341,32 @@ void PhotonMapping::RenderEnergy()
 {
     for (int i = 0; i < mesh->numPrimitives(); ++i) {
         Primitive *p = mesh->getPrimitive(i);
+        int q = p->getPhotons().size();
+        std::cout << "Primitive " << i << " has " << q << " photons\n";
         if (Sphere *s = dynamic_cast<Sphere*> (p)) {
 			double r = s->getRadius();
             Vec3f  v = s->getCenter();
 			Vec3f  e = CalculateEnergy(s);
 			double e_ave = e.average();
-			std::cout << "e_ave: " << e_ave << "\n";
+			std::cout << "power: " << e_ave << "\n";
 			double db = 10 * log10(e_ave / 1e-3);
 			std::cout << "db: " << db << "\n";
+			double intensity = (db + 100) / 124;
 			
+			glPushMatrix();
+				if(db < -100) {
+					glColor3f(1.0, 0.0, 0.0);	
+				}
+				else if(db > 24) {
+					glColor3f(0.0, 1.0, 0.0);
+				}
+				else {
+					glColor3f(1.0-intensity, intensity, 0.0);
+				}
+				glTranslated(v.x(), v.y(), v.z());
+				GLUquadricObj *quad = gluNewQuadric();
+				gluSphere(quad, r, 30, 30);
+			glPopMatrix();
         }
     }
 }

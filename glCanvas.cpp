@@ -274,24 +274,6 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
             Render();
             break; }
         case 'd': case 'D': {
-            Vec3f en;
-            int num_prims = mesh->numPrimitives();
-            for (int i = 0; i < num_prims; ++i) {
-                std::vector<Photon> phos = mesh->getPrimitive(i)->getPhotons();
-                int q = mesh->getPrimitive(i)->getPhotons().size();
-                std::cout << "Primitive " << i << " has " << q << " photons\n";
-                for (int j = 0; j < q; ++j) {
-                    en += phos[j].getEnergy();
-                }
-              //  std::cout << "en is " << en << "\n";
-                double intensity = 0;
-                for (int j = 0; j < 3; ++j) {
-                    intensity += en[j];
-                }
-                intensity /= 3.0;
-                mesh->getPrimitive(i)->setIntensity(intensity);
-              //  std::cout << "intensity is " << intensity << "\n";
-            }
             args->render_photons = false;
             args->render_kdtree = false;
             args->render_energy = !args->render_energy;
