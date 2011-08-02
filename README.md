@@ -4,7 +4,11 @@ Accurate Radio Transmission Using Photon Mapping
 Getting the Code
 ----------------
 https://github.com/laprej/photons will show available options for viewing
-and downloading the code as you see fit.
+and downloading the code as you see fit.  Clicking on "Downloads" will
+present you with several options including "Download .tar.gz" and
+"Download .zip."  Additionally, you can use git directly:
+
+    git clone git://github.com/laprej/photons.git
 
 Running the Code
 ----------------
