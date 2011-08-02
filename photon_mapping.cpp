@@ -37,7 +37,7 @@ PhotonMapping::~PhotonMapping() {
 
 void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction, 
                                 const Vec3f &energy, int iter) const {
-    if (iter > 5) {
+    if (iter > 3) {
         return;
     }
     // ==============================================
