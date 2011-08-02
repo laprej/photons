@@ -346,9 +346,9 @@ void PhotonMapping::RenderEnergy()
             Vec3f  v = s->getCenter();
 			Vec3f  e = CalculateEnergy(s);
 			double e_ave = e.average();
-			cout << "e_ave: " << e_ave << "\n";
-			double db = 10 * log(e_ave / 1e-3);
-			cout << "db: " << db << "\n";
+			std::cout << "e_ave: " << e_ave << "\n";
+			double db = 10 * log10(e_ave / 1e-3);
+			std::cout << "db: " << db << "\n";
 			
         }
     }
