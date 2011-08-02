@@ -177,7 +177,7 @@ void PhotonMapping::TracePhotons() {
         std::cout << "emitted energy for light " << i << ": " << num * energy << "\n";
         std::cout << "energy per photon: " << energy << "\n";
         global_energy += num*energy;
-#pragma omp parallel for
+#pragma omp parallel for 
         for (int j = 0; j < num; j++) {
             Vec3f start = lights[i]->RandomPoint();
             // the initial direction for this photon (for diffuse light sources)
