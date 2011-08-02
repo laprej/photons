@@ -365,7 +365,7 @@ void PhotonMapping::RenderEnergy()
 				}
 				glTranslated(v.x(), v.y(), v.z());
 				GLUquadricObj *quad = gluNewQuadric();
-				gluSphere(quad, r, 30, 30);
+				gluSphere(quad, 10*r, 30, 30);
 			glPopMatrix();
         }
     }
