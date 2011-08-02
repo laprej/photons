@@ -80,6 +80,9 @@ public:
     data[1] *= d1;
     data[2] *= d2; }
   void Negate() { Scale(-1.0); }
+  inline double average() {
+	return (data[0] + data[1] + data[2]) / 3.0
+  }
   double Dot3(const Vec3f &V) const {
     return data[0] * V.data[0] +
       data[1] * V.data[1] +

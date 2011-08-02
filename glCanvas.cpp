@@ -283,14 +283,14 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
                 for (int j = 0; j < q; ++j) {
                     en += phos[j].getEnergy();
                 }
-                std::cout << "en is " << en << "\n";
+              //  std::cout << "en is " << en << "\n";
                 double intensity = 0;
                 for (int j = 0; j < 3; ++j) {
                     intensity += en[j];
                 }
                 intensity /= 3.0;
                 mesh->getPrimitive(i)->setIntensity(intensity);
-                std::cout << "intensity is " << intensity << "\n";
+              //  std::cout << "intensity is " << intensity << "\n";
             }
             args->render_photons = false;
             args->render_kdtree = false;

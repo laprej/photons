@@ -1,5 +1,3 @@
-#!/Users/manderso/.local/bin/perl
-
 package OBJ::Parser;
 
 use warnings;
@@ -13,5 +11,6 @@ sub new {
   return bless($data, $class);
 }
 
+sub 
 
 1;

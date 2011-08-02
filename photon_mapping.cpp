@@ -174,8 +174,8 @@ void PhotonMapping::TracePhotons() {
         // the initial energy for this photon
         Vec3f energy = my_area/double(num) * lights[i]->getMaterial()->getEmittedColor();
         Vec3f normal = lights[i]->computeNormal();
-        std::cout << "emitted energy for light " << i << ": " << num * energy << "\n";
-        std::cout << "energy per photon: " << energy << "\n";
+     //   std::cout << "emitted energy for light " << i << ": " << num * energy << "\n";
+      //  std::cout << "energy per photon: " << energy << "\n";
         global_energy += num*energy;
 #pragma omp parallel for 
         for (int j = 0; j < num; j++) {
@@ -344,7 +344,12 @@ void PhotonMapping::RenderEnergy()
         if (Sphere *s = dynamic_cast<Sphere*> (p)) {
 			double r = s->getRadius();
             Vec3f  v = s->getCenter();
-			std::cout << CalculateEnergy(s);
+			Vec3f  e = CalculateEnergy(s);
+			double e_ave = e.average();
+			cout << "e_ave: " << e_ave << "\n";
+			double db = 10 * log(e_ave / 1e-3);
+			cout << "db: " << db << "\n";
+			
         }
     }
 }
