@@ -1,11 +1,10 @@
 all: sum.pdf
 
 sum.pdf: sum.tex my-bibliography-file.bib
-	latex sum.tex
+	pdflatex sum.tex
 	bibtex sum
-	latex sum.tex
-	latex sum.tex
-	dvipdf sum.dvi
+	pdflatex sum.tex
+	pdflatex sum.tex
 	open sum.pdf
 
 clean:
