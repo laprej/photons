@@ -1,0 +1,38 @@
+Primitive 0 has 29 photons
+power: 6.57751e-05
+db: -11.8194
+Primitive 1 has 0 photons
+power: 0
+db: -inf
+Primitive 2 has 1 photons
+power: 4.21875e-10
+db: -63.7482
+Primitive 3 has 4 photons
+power: 2.85117e-08
+db: -45.4498
+Primitive 4 has 2 photons
+power: 8.01562e-09
+db: -50.9606
+Primitive 5 has 11 photons
+power: 1.03687e-07
+db: -39.8427
+
+
+Primitive 0 has 31 photons
+power: 2.27747e-05
+db: -16.4255
+Primitive 1 has 0 photons
+power: 0
+db: -inf
+Primitive 2 has 0 photons
+power: 0
+db: -inf
+Primitive 3 has 3 photons
+power: 5.6263e-06
+db: -22.4978
+Primitive 4 has 0 photons
+power: 0
+db: -inf
+Primitive 5 has 14 photons
+power: 3.96539e-07
+db: -34.0171
