@@ -37,5 +37,5 @@ To repeat our experiments, you may run the following commands:
     ./render -input refloormapsobj/AE_Quads_Control.obj -num_photons_to_shoot 10000
 	./render -input refloormapsobj/AE_Quads_No_Transmit.obj -num_photons_to_shoot 10000
 
-Of course, shooting 10000 photons will take quite a while.  Considering
+Of course, shooting 10000 photons will take quite a while.  Consider
 using a smaller number (such as 500 or 1000).
