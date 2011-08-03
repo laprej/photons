@@ -262,6 +262,7 @@ gain $G_r$ as ns-3 also makes these assumptions.  This reduces the equation to
 
 \begin{eqnarray}
 RX_{dB} = TX_{dB} + 10\mathrm{log_{10}} \frac{\lambda^2}{(4 \pi d)^2 L}
+\label{Friis}
 \end{eqnarray}
 
 \vspace{5mm}
@@ -339,10 +340,12 @@ Our first assumption is a unity gain antenna. If the antenna were to impart
 a large gain or loss, this would need to be factored in as photons were 
 transmitted.
 
-To test the plausibility of our model, we used an object file
+To test the plausibility of our model, we used an object file provided by Professor Cutler
+of the Amos Eaton 1st floor, which we quadrangulated to allow our code to properly process
+the file.
 
 The test involves a unidirectional antenna in the center room of the Amos Eaton
-first floor object model. This antenna is an area light source emits 250 mW via 
+first floor object model. This antenna is an area light source which emits 250 mW via 
 10,000 photons. Using fewer photons was shown to cause accuracy problems as each
 photon was contained too much energy. The light is ''monochromatic'' as we are 
 using only one frequency. The model could be trivially extended to support 3 
@@ -367,9 +370,9 @@ run. As is shown in Figure \ref{no_trans_photons}, all photon transport must tak
 in the model. As such, when the power calculation pass was run (Figure \ref{no_trans_sphere}), we see a marked decrease in the amount of radios that can ''hear'' the antenna. This is contrary to what we would expect in reality, and thus
 realism in our model can be shown to have increased.
   
-The Friis equation (Eqn. 2) approach assumes a vacuum and perfect line of sight.
+The Friis equation (Equation \ref{Friis}) approach assumes a vacuum and perfect line of sight.
 This leads to highly inaccurate results in most situations, including long
-distances in air. For example, in our model, Friis would estimate a repower of 19 dBm 
+distances in air. For example, in our model, Friis would estimate a received power of 19 dBm 
 for any spheres within 10 meters of the antenna. In our model we do not see a received power 
 this high even for the sphere in the same room as the antenna. Indeed, from a quick experiment in
 MRC 330D, my laptop received only -33 dBm despite the fact that I sit next to the access point.
