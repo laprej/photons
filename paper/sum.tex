@@ -351,31 +351,29 @@ frequencies as we extended code using the RGB light model.
 We chose to make Amos Eaton out of a material that was 30\% Reflective and 10\%
 transmissive which we based on assumptions of an average of typical building losses.
 
-As we can see in figure [figure] the photons spread out well among the AE model, however
+As we can see in Figure \ref{trans_photons} the photons spread out well among the AE model, however
 the transmitted power differs greatly. Six spheres were placed in various locations around
 the building. The number of photons crossing a one unit sphere were counted and their total 
 unit energy was calculated. This was then multiplied by the energy per photon which provided
 us with a received energy in watts. We then calculated the signal power in dBm and mapped the
-expected range to a red-green.  The expected range was from -100 dBm to 24 dBm which was the
-output power for 
+expected range to a red-green continuum. The expected range of signals was from -100 dBm to 24 dBm,
+as -100 dBm was the weakest signal a radio can ''hear'' and 24 dBm is roughly the power of the source.
+Anything below -100 dBm was colored pure red and above 24 pure green. Below -100 dBm is a common 
+possibility but over 24 dBm would indicate an error condition, which is displayed. The results of our
+calculations are show in Figure \ref{trans_sphere}.
 
-Since the transmissive model was a major addition to the code, 
-
-
-
-The Friis equation approach used assumes a vacuum and perfect line of sight.
+Since the transmissive model was a major addition to the code, a run with no transmissive materials was
+run. As is shown in Figure \ref{no_trans_photons}, all photon transport must take place using the doors
+in the model. As such, when the power calculation pass was run (Figure \ref{no_trans_sphere}), we see a marked decrease in the amount of radios that can ''hear'' the antenna. This is contrary to what we would expect in reality, and thus
+realism in our model can be shown to have increased.
+  
+The Friis equation (Eqn. 2) approach assumes a vacuum and perfect line of sight.
 This leads to highly inaccurate results in most situations, including long
-distances in air. For example, in the first model, Friis would estimate a power of XXXX
-and we calculate XXXX, which is vastly different. 
-
-
-%% It is worth mentioning that our Amos Eaton .obj model did not have a roof on it.
-%% We therefore expected photons to leak out of the model and, in fact, they do.
-%% This effect was mainly discarded which may or may not have been a wise
-%% decision, although capping the model was not appropriate for this project as
-%% that would impact the ability to clearly view the model from a birds-eye view.
-%% Simply placing a large quad over the entire model would probably suffice to
-%% correct this.
+distances in air. For example, in our model, Friis would estimate a repower of 19 dBm 
+for any spheres within 10 meters of the antenna. In our model we do not see a received power 
+this high even for the sphere in the same room as the antenna. Indeed, from a quick experiment in
+MRC 330D, my laptop received only -33 dBm despite the fact that I sit next to the access point.
+Clearly, our model is far more accurate.  
 
 \section{Optimizations}
 The bulk of our time is spent in the photon emission stage.  Each photon is
