@@ -55,6 +55,8 @@
 
 \usepackage{url}
 
+\usepackage{graphicx}
+
 \begin{document}
 
 %----------------------------------------------------------------------
@@ -451,6 +453,49 @@ as well.
 % do the bibliography:
 \bibliographystyle{IEEEbib}
 \bibliography{my-bibliography-file}
+
+\newpage
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=120mm]{trans_photons.png}
+\caption{Photon scatter patterns on the first floor of Amos Eaton with
+transmissive walls.}
+\label{trans_photons}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=120mm]{trans_sphere.png}
+\caption{Bounding spheres at various locations on the first floor of Amos Eaton
+with transmissive walls.  Color values range from red (no reception) to green
+(good reception).}
+\label{trans_sphere}
+\end{center}
+\end{figure*}
+
+\newpage
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=120mm]{no_trans_photons.png}
+\caption{Photon scatter patterns on the first floor of Amos Eaton with
+non-transmissive walls. The photons do not blanket the entire model as they do
+in the transmissive scenario.}
+\label{no_trans_photons}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=120mm]{no_trans_sphere.png}
+\caption{Bounding spheres at various locations on the first floor of Amos Eaton
+with non-transmissive walls.  Color values range from red (no reception) to green
+(good reception).  Less photons implies weaker signal strength.}
+\label{no_trans_sphere}
+\end{center}
+\end{figure*}
 
 % where ``my-bibliography-file.bib'' is the name of the file with all the 
 % BibTeX entries.
