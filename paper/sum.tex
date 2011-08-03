@@ -337,35 +337,32 @@ Our first assumption is a unity gain antenna. If the antenna were to impart
 a large gain or loss, this would need to be factored in as photons were 
 transmitted.
 
-\begin{enumerate}
+To test the plausibility of our model, we used an object file
 
-\item antenna electrodynamics
+The test involves a unidirectional antenna in the center room of the Amos Eaton
+first floor object model. This antenna is an area light source emits 250 mW via 
+10,000 photons. Using fewer photons was shown to cause accuracy problems as each
+photon was contained too much energy. The light is ''monochromatic'' as we are 
+using only one frequency. The model could be trivially extended to support 3 
+frequencies as we extended code using the RGB light model.
 
-\item Material stuff
-All equal numbers, no RGB.
+We chose to make Amos Eaton out of a material that was 30\% Reflective and 10\%
+transmissive which we based on assumptions of an average of typical building losses.
 
-\item Test Cases:
--flat light source in two directions
--poor mans omnidirectional
--average case 
+As we can see in figure [figure] the photons spread out well among the AE model, however
+the transmitted power differs greatly. Six spheres were placed in various locations around
+the building. The number of photons crossing a one unit sphere were counted an the energies
+were summed.
 
--Material "study"
-Concrete/Dense Material (low transmissity)
-Aluminum Foil/Highly Reflective
+Since the transmissive model was a major addition to the code, 
 
-Stations:
-1. Far field
-2. Near field
-3. Medium field
 
-\item Source estimates
 
 The Friis equation approach used assumes a vacuum and perfect line of sight.
 This leads to highly inaccurate results in most situations, including long
 distances in air. For example, in the first model, Friis would estimate a power of XXXX
 and we calculate XXXX, which is vastly different. 
 
-\end{enumerate}
 
 %% It is worth mentioning that our Amos Eaton .obj model did not have a roof on it.
 %% We therefore expected photons to leak out of the model and, in fact, they do.
