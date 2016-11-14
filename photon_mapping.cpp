@@ -137,6 +137,8 @@ void PhotonMapping::TracePhoton(const Vec3f &position, const Vec3f &direction,
 
 void PhotonMapping::TracePhotons() {
     std::cout << "trace photons" << std::endl;
+
+    clock_t startTime = clock();
     
     // first, throw away any existing photons
     delete kdtree;
@@ -185,6 +187,9 @@ void PhotonMapping::TracePhotons() {
             TracePhoton(start,direction,energy,0);
         }
     }
+
+    std::cout << double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds.\n";
+
     std::cout << "end trace photons" << std::endl;
 }
 
