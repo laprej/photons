@@ -50,12 +50,15 @@ bool KDTree::overlaps(const BoundingBox &bb) const {
   return true;
 }
 
+void KDTree::AddPhoton(const Photon &p)
+{
+    std::lock_guard<std::mutex> lk(m);
+    
+    AddPhoton2(p);
+}
 
 // ==================================================================
-void KDTree::AddPhoton(const Photon &p) {
-    
-    pthread_mutex_lock(&locker);
-
+void KDTree::AddPhoton2(const Photon &p) {
   const Vec3f &position = p.getPosition();
   assert (PhotonInCell(p));
   if (isLeaf()) {
@@ -69,24 +72,22 @@ void KDTree::AddPhoton(const Photon &p) {
     // decide which subnode to recurse into
     if (split_axis == 0) {
       if (position.x() < split_value)
-	child1->AddPhoton(p);
+	child1->AddPhoton2(p);
       else
-	child2->AddPhoton(p);
+	child2->AddPhoton2(p);
     } else if (split_axis == 1) {
       if (position.y() < split_value)
-	child1->AddPhoton(p);
+	child1->AddPhoton2(p);
       else
-	child2->AddPhoton(p);
+	child2->AddPhoton2(p);
     } else {
       assert (split_axis == 2);
       if (position.z() < split_value)
-	child1->AddPhoton(p);
+	child1->AddPhoton2(p);
       else
-	child2->AddPhoton(p);
+	child2->AddPhoton2(p);
     }
   }
-    
-    pthread_mutex_unlock(&locker);
 }
 
 
@@ -119,8 +120,6 @@ void KDTree::CollectPhotonsInBox(const BoundingBox &bb, std::vector<Photon> &pho
 
 // ==================================================================
 void KDTree::SplitCell() {
-    
-    pthread_mutex_lock(&locker);
     
   const Vec3f& min = bbox.getMin();
   const Vec3f& max = bbox.getMax();
@@ -161,11 +160,8 @@ void KDTree::SplitCell() {
   // add all the photons to one of those children
   for (int i = 0; i < num_photons; i++) {
     const Photon &p = tmp[i];
-    this->AddPhoton(p);
+    this->AddPhoton2(p);
   }
-    
-    pthread_mutex_unlock(&locker);
-
 }
 
 // ==================================================================
